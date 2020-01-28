@@ -1,38 +1,28 @@
 {
-  "name": "webz2feel/core-module",
-  "type": "asgard-module",
-  "description": "The core module for BeastCMS. This is required for every install.",
-  "keywords": [
-    "beastcms",
-    "core"
-  ],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Imran Ali",
-      "email": "imran@wtwm.com",
-      "role": "Developer"
+    "name": "nwidart/core",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Core\\Providers\\CoreServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Core\\": ""
+        }
+    },
+    "require": {
+        "dimsav/laravel-translatable": "^10.0"
     }
-  ],
-  "require": {
-    "php": ">=7.0.0",
-    "composer/installers": "~1.0",
-    "nwidart/laravel-modules": "~6.0",
-    "laravelcollective/html": "~6.0",
-    "laracasts/presenter": "~0.2",
-    "dimsav/laravel-translatable": "~9.*",
-    "mcamara/laravel-localization": "~1.4",
-    "floatingpoint/stylist": "1.0",
-    "maatwebsite/laravel-sidebar": "~2.1",
-    "yajra/laravel-datatables-oracle": "~9.0",
-    "tightenco/ziggy": "*"
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Modules\\Core\\": ".",
-      "Modules\\": "Modules/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
 }
