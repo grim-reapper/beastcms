@@ -1,4 +1,6 @@
 {
     "Core": true,
-    "Core\\\\Base": true
+    "Core\\\\Base": true,
+    "Base": true,
+    "Setting": true
 }
