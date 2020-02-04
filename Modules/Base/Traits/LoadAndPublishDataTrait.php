@@ -23,7 +23,7 @@ trait LoadAndPublishDataTrait
 
     public function getBasePath(): string
     {
-        return $this->basePath ?? base_module_path();
+        return $this->basePath ?? platform_path();
     }
 
     public function loadAndPublishConfigurations($fileNames): self
@@ -124,6 +124,14 @@ trait LoadAndPublishDataTrait
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getAssetsPath(): string
+    {
+        return $this->getBasePath() . $this->getDashedNamespace() . '/Public/';
     }
 
     protected function getMigrationsPath(): string

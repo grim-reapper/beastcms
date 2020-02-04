@@ -3,10 +3,16 @@
 namespace Modules\Base\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
+use Modules\Base\Foundation\CustomResourceRegistrar;
+use Modules\Base\Foundation\Helper;
+use Modules\Base\Traits\LoadAndPublishDataTrait;
+use Illuminate\Routing\ResourceRegistrar;
+use Modules\Setting\Providers\SettingServiceProvider;
+use Modules\Setting\Support\SettingStore;
 
 class BaseServiceProvider extends ServiceProvider
 {
+    use LoadAndPublishDataTrait;
     /**
      * Boot the application events.
      *
@@ -14,11 +20,7 @@ class BaseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
-        $this->registerConfig();
-        $this->registerViews();
-        $this->registerFactories();
-        $this->loadMigrationsFrom(module_path('Base', 'Database/Migrations'));
+
     }
 
     /**
@@ -28,72 +30,20 @@ class BaseServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+        $this->app->bind(ResourceRegistrar::class, function ($app) {
+            return new CustomResourceRegistrar($app['router']);
+        });
         $this->app->register(RouteServiceProvider::class);
+        Helper::autoload(__DIR__ . '/../helpers');
+        $this->setNamespace('Base')->loadAndPublishConfigurations(['config']);
+
+        $this->app->register(SettingServiceProvider::class);
+
+        $config = $this->app->make('config');
+        $setting = $this->app->make(SettingStore::class);
+
     }
-
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            module_path('Base', 'Config/config.php') => config_path('base.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            module_path('Base', 'Config/config.php'), 'base'
-        );
-    }
-
-    /**
-     * Register views.
-     *
-     * @return void
-     */
-    public function registerViews()
-    {
-        $viewPath = resource_path('views/modules/base');
-
-        $sourcePath = module_path('Base', 'Resources/views');
-
-        $this->publishes([
-            $sourcePath => $viewPath
-        ],'views');
-
-        $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/base';
-        }, \Config::get('view.paths')), [$sourcePath]), 'base');
-    }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/base');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'base');
-        } else {
-            $this->loadTranslationsFrom(module_path('Base', 'Resources/lang'), 'base');
-        }
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
-            app(Factory::class)->load(module_path('Base', 'Database/factories'));
-        }
-    }
-
     /**
      * Get the services provided by the provider.
      *

@@ -4,9 +4,22 @@ namespace Modules\Setting\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-
+use Modules\Base\Foundation\Helper;
+use Modules\Base\Traits\LoadAndPublishDataTrait;
+use Modules\Setting\Eloquent\SettingRepository;
+use Modules\Setting\Entities\Setting;
+use Modules\Setting\Facades\SettingFacade;
+use Modules\Setting\Repositories\Caches\SettingCacheDecorator;
+use Modules\Setting\Repositories\Interfaces\SettingInterface;
+use Modules\Setting\Support\SettingsManager;
+use Modules\Setting\Support\SettingStore;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Foundation\Application;
+use Illuminate\Routing\Events\RouteMatched;
 class SettingServiceProvider extends ServiceProvider
 {
+    use LoadAndPublishDataTrait;
+    protected $defer = true;
     /**
      * Boot the application events.
      *
@@ -14,11 +27,13 @@ class SettingServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
-        $this->registerConfig();
-        $this->registerViews();
-        $this->registerFactories();
-        $this->loadMigrationsFrom(module_path('Setting', 'Database/Migrations'));
+        $this
+            ->loadRoutes(['web'])
+            ->loadAndPublishViews()
+            ->loadAndPublishTranslations()
+            ->loadAndPublishConfigurations(['permissions'])
+            ->loadMigrations()
+            ->publishAssets();
     }
 
     /**
@@ -29,69 +44,26 @@ class SettingServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-    }
+        $this->setNamespace('Setting')
+            ->loadAndPublishConfigurations(['general']);
 
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            module_path('Setting', 'Config/config.php') => config_path('setting.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            module_path('Setting', 'Config/config.php'), 'setting'
-        );
-    }
+        $this->app->singleton(SettingsManager::class, function (Application $app) {
+            return new SettingsManager($app);
+        });
 
-    /**
-     * Register views.
-     *
-     * @return void
-     */
-    public function registerViews()
-    {
-        $viewPath = resource_path('views/modules/setting');
+        $this->app->bind(SettingStore::class, function (Application $app) {
+            return $app->make(SettingsManager::class)->driver();
+        });
 
-        $sourcePath = module_path('Setting', 'Resources/views');
+        AliasLoader::getInstance()->alias('Setting', SettingFacade::class);
 
-        $this->publishes([
-            $sourcePath => $viewPath
-        ],'views');
+        $this->app->bind(SettingInterface::class, function () {
+            return new SettingCacheDecorator(
+                new SettingRepository(new Setting)
+            );
+        });
 
-        $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/setting';
-        }, \Config::get('view.paths')), [$sourcePath]), 'setting');
-    }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/setting');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'setting');
-        } else {
-            $this->loadTranslationsFrom(module_path('Setting', 'Resources/lang'), 'setting');
-        }
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
-            app(Factory::class)->load(module_path('Setting', 'Database/factories'));
-        }
+        Helper::autoload(__DIR__ . '/../helpers');
     }
 
     /**
@@ -101,6 +73,10 @@ class SettingServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [];
+        return [
+            SettingsManager::class,
+            SettingStore::class,
+            'setting',
+        ];
     }
 }
