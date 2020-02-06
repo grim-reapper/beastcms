@@ -1,4 +1,4 @@
-@extends('core/base::layouts.master')
+@extends('Base::layouts.master')
 @section('content')
     <div id="dashboard-alerts">
         <verify-license-component verify-url="{{ route('settings.license.verify') }}" setting-url="{{ route('settings.options') }}"></verify-license-component>
@@ -16,8 +16,8 @@
     </div>
 
     @if (count($userWidgets) > 0)
-        <a href="#" class="manage-widget"><i class="fa fa-plus"></i> {{ trans('core/dashboard::dashboard.manage_widgets') }}</a>
-        @include('core/dashboard::partials.modals', compact('widgets'))
+        <a href="#" class="manage-widget"><i class="fa fa-plus"></i> {{ trans('Dashboard::dashboard.manage_widgets') }}</a>
+        @include('Dashboard::partials.modals', compact('widgets'))
     @endif
 
 @stop

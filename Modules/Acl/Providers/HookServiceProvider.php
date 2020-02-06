@@ -27,7 +27,7 @@ class HookServiceProvider extends ServiceProvider
         return (new DashboardWidgetInstance)
             ->setType('stats')
             ->setPermission('users.index')
-            ->setTitle(trans('core/acl::users.users'))
+            ->setTitle(trans('Acl::users.users'))
             ->setKey('widget_total_users')
             ->setIcon('fas fa-users')
             ->setColor('#3598dc')

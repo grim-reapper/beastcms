@@ -1,15 +1,15 @@
-@extends('core/base::layouts.master')
+@extends('Base::layouts.master')
 @section('content')
     {!! Form::open(['route' => ['setting.email.template.store']]) !!}
     <div class="max-width-1200">
         <div class="flexbox-annotated-section">
             <div class="flexbox-annotated-section-annotation">
                 <div class="annotated-section-title pd-all-20">
-                    <h2>{{ trans('core/setting::setting.email.title') }}</h2>
+                    <h2>{{ trans('Setting::setting.email.title') }}</h2>
                 </div>
                 <div class="annotated-section-description pd-all-20 p-none-t">
                     <p class="color-note">
-                        {!! trans('core/setting::setting.email.description') !!}
+                        {!! trans('Setting::setting.email.description') !!}
                     </p>
                     <div class="available-variable">
                         @foreach(MailVariable::getVariables('core') as $coreKey => $coreVariable)
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label class="text-title-field"
                                    for="email_subject">
-                                {{ trans('core/setting::setting.email.subject') }}
+                                {{ trans('Setting::setting.email.subject') }}
                             </label>
                             <input type="hidden" name="email_subject_key"
                                    value="{{ get_setting_email_subject_key($pluginData['type'], $pluginData['name'], $pluginData['template_file']) }}">
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <input type="hidden" name="template_path" value="{{ get_setting_email_template_path($pluginData['name'], $pluginData['template_file']) }}">
                         <label class="text-title-field"
-                               for="email_content">{{ trans('core/setting::setting.email.content') }}</label>
+                               for="email_content">{{ trans('Setting::setting.email.content') }}</label>
                         <textarea id="mail-template-editor" name="email_content" class="form-control" style="overflow-y:scroll; height: 500px;">{{ $emailContent }}</textarea>
                     </div>
                 </div>
@@ -54,13 +54,13 @@
                 &nbsp;
             </div>
             <div class="flexbox-annotated-section-content">
-                <a href="{{ route('settings.email') }}" class="btn btn-secondary">{{ trans('core/setting::setting.email.back') }}</a>
-                <a class="btn btn-warning btn-trigger-reset-to-default" data-target="{{ route('setting.email.template.reset-to-default') }}">{{ trans('core/setting::setting.email.reset_to_default') }}</a>
-                <button class="btn btn-info" type="submit" name="submit">{{ trans('core/setting::setting.save_settings') }}</button>
+                <a href="{{ route('settings.email') }}" class="btn btn-secondary">{{ trans('Setting::setting.email.back') }}</a>
+                <a class="btn btn-warning btn-trigger-reset-to-default" data-target="{{ route('setting.email.template.reset-to-default') }}">{{ trans('Setting::setting.email.reset_to_default') }}</a>
+                <button class="btn btn-info" type="submit" name="submit">{{ trans('Setting::setting.save_settings') }}</button>
             </div>
         </div>
     </div>
     {!! Form::close() !!}
 
-    {!! Form::modalAction('reset-template-to-default-modal', trans('core/setting::setting.email.confirm_reset'), 'info', trans('core/setting::setting.email.confirm_message'), 'reset-template-to-default-button', trans('core/setting::setting.email.continue')) !!}
+    {!! Form::modalAction('reset-template-to-default-modal', trans('Setting::setting.email.confirm_reset'), 'info', trans('Setting::setting.email.confirm_message'), 'reset-template-to-default-button', trans('Setting::setting.email.continue')) !!}
 @endsection

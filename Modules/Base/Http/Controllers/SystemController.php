@@ -27,7 +27,7 @@ class SystemController extends Controller
      */
     public function getInfo(Request $request, TableBuilder $tableBuilder)
     {
-        page_title()->setTitle(trans('core/base::system.info.title'));
+        page_title()->setTitle(trans('Base::system.info.title'));
 
         Assets::addScriptsDirectly('vendor/core/js/system-info.js')
             ->addStylesDirectly(['vendor/core/css/system-info.css']);
@@ -44,7 +44,7 @@ class SystemController extends Controller
         $systemEnv = SystemManagement::getSystemEnv();
         $serverEnv = SystemManagement::getServerEnv();
 
-        return view('core/base::system.info', compact(
+        return view('Base::system.info', compact(
             'packages',
             'infoTable',
             'systemEnv',
@@ -57,11 +57,11 @@ class SystemController extends Controller
      */
     public function getCacheManagement()
     {
-        page_title()->setTitle(trans('core/base::cache.cache_management'));
+        page_title()->setTitle(trans('Base::cache.cache_management'));
 
         Assets::addScriptsDirectly('vendor/core/js/cache.js');
 
-        return view('core/base::system.cache');
+        return view('Base::system.cache');
     }
 
     /**
@@ -93,7 +93,7 @@ class SystemController extends Controller
             }
         }
 
-        return $response->setMessage(trans('core/base::cache.commands.' . $request->input('type') . '.success_msg'));
+        return $response->setMessage(trans('Base::cache.commands.' . $request->input('type') . '.success_msg'));
     }
 
     /**

@@ -52,12 +52,12 @@ abstract class TableAbstract extends DataTable
     /**
      * @var string
      */
-    protected $view = 'core/table::table';
+    protected $view = 'Table::table';
 
     /**
      * @var string
      */
-    protected $filterTemplate = 'core/table::filter';
+    protected $filterTemplate = 'Table::filter';
 
     /**
      * @var array
@@ -257,7 +257,7 @@ abstract class TableAbstract extends DataTable
                 'lengthMenu'   => Arr::sortRecursive([
                     array_values(array_unique(array_merge([10, 30, 50], [$this->pageLength, -1]))),
                     array_values(array_unique(array_merge([10, 30, 50],
-                        [$this->pageLength, trans('core/base::tables.all')]))),
+                        [$this->pageLength, trans('Base::tables.all')]))),
                 ]),
                 'pageLength'   => $this->pageLength,
                 'processing'   => true,
@@ -274,19 +274,19 @@ abstract class TableAbstract extends DataTable
                             'previous' => trans('pagination.previous'),
                         ],
                     ],
-                    'emptyTable'        => trans('core/base::tables.no_data'),
-                    'info'              => view('core/table::table-info')->render(),
-                    'infoEmpty'         => trans('core/base::tables.no_record'),
+                    'emptyTable'        => trans('Base::tables.no_data'),
+                    'info'              => view('Table::table-info')->render(),
+                    'infoEmpty'         => trans('Base::tables.no_record'),
                     'lengthMenu'        => Html::tag('span', '_MENU_', ['class' => 'dt-length-style'])->toHtml(),
                     'search'            => '',
                     'searchPlaceholder' => __('Search...'),
-                    'zeroRecords'       => trans('core/base::tables.no_record'),
+                    'zeroRecords'       => trans('Base::tables.no_record'),
                     'processing'        => Html::image(url('vendor/core/images/loading-spinner-blue.gif')),
                     'paginate'          => [
                         'next'     => trans('pagination.next'),
                         'previous' => trans('pagination.previous'),
                     ],
-                    'infoFiltered'      => trans('core/table::general.filtered'),
+                    'infoFiltered'      => trans('Table::general.filtered'),
                 ],
                 'aaSorting'    => $this->useDefaultSorting ? [
                     [
@@ -344,7 +344,7 @@ abstract class TableAbstract extends DataTable
     {
         return [
             'operations' => [
-                'title'      => trans('core/base::tables.operations'),
+                'title'      => trans('Base::tables.operations'),
                 'width'      => '134px',
                 'class'      => 'text-center',
                 'orderable'  => false,
@@ -490,7 +490,7 @@ abstract class TableAbstract extends DataTable
         return [
             [
                 'extend'  => 'collection',
-                'text'    => '<span>' . trans('core/base::forms.actions') . ' <span class="caret"></span></span>',
+                'text'    => '<span>' . trans('Base::forms.actions') . ' <span class="caret"></span></span>',
                 'buttons' => $this->getActions(),
             ],
         ];
@@ -676,7 +676,7 @@ abstract class TableAbstract extends DataTable
     {
         $actions = [];
         if ($this->getBulkChanges()) {
-            $actions['bulk-change'] = view('core/table::bulk-changes', [
+            $actions['bulk-change'] = view('Table::bulk-changes', [
                 'bulk_changes' => $this->getBulkChanges(),
                 'class'        => get_class($this),
                 'url'          => $this->bulkChangeUrl,
@@ -741,7 +741,7 @@ abstract class TableAbstract extends DataTable
         switch ($key) {
             case 'created_at':
             case 'updated_at':
-                $value = Carbon::createFromFormat(config('core.base.general.date_format.date'), $value)->toDateString();
+                $value = Carbon::createFromFormat(config('Base::general.date_format.date'), $value)->toDateString();
                 $query = $query->whereDate($key, $operator, $value);
                 break;
             default:
@@ -776,20 +776,20 @@ abstract class TableAbstract extends DataTable
         }
         $attributes = [
             'class'        => 'form-control input-value filter-column-value',
-            'placeholder'  => trans('core/table::general.value'),
+            'placeholder'  => trans('Table::general.value'),
             'autocomplete' => 'off',
         ];
 
         switch ($type) {
             case 'select':
                 $attributes['class'] = $attributes['class'] . ' select';
-                $attributes['placeholder'] = trans('core/table::general.select_option');
+                $attributes['placeholder'] = trans('Table::general.select_option');
                 $html = call_user_func_array([Form::class, 'customSelect'], [$inputName, $data, $value, $attributes])
                     ->toHtml();
                 break;
             case 'select-search':
                 $attributes['class'] = $attributes['class'] . ' select-search-full';
-                $attributes['placeholder'] = trans('core/table::general.select_option');
+                $attributes['placeholder'] = trans('Table::general.select_option');
                 $html = Form::customSelect($inputName, $data, $value, $attributes)->toHtml();
                 break;
             case 'number':
@@ -797,8 +797,8 @@ abstract class TableAbstract extends DataTable
                 break;
             case 'date':
                 $attributes['class'] = $attributes['class'] . ' datepicker';
-                $attributes['data-date-format'] = config('core.base.general.date_format.js.date');
-                $html = view('core/table::partials.date-field', [
+                $attributes['data-date-format'] = config('Base::general.date_format.js.date');
+                $html = view('Table::partials.date-field', [
                     'content' => Form::text($inputName, $value, $attributes)->toHtml(),
                 ])->render();
                 break;
@@ -855,7 +855,7 @@ abstract class TableAbstract extends DataTable
         switch ($key) {
             case 'created_at':
             case 'updated_at':
-                $value = Carbon::createFromFormat(config('core.base.general.date_format.date'), $value)
+                $value = Carbon::createFromFormat(config('Base::general.date_format.date'), $value)
                     ->toDateTimeString();
                 break;
         }
@@ -926,7 +926,7 @@ abstract class TableAbstract extends DataTable
         if (!$permission || Auth::user()->hasPermission($permission)) {
             $buttons['create'] = [
                 'link' => $url,
-                'text' => view('core/base::elements.tables.actions.create')->render(),
+                'text' => view('Base::elements.tables.actions.create')->render(),
             ];
         }
 
@@ -941,7 +941,7 @@ abstract class TableAbstract extends DataTable
     protected function addDeleteAction(string $url, $permission = null, $actions = []): array
     {
         if (!$permission || Auth::user()->hasPermission($permission)) {
-            $actions['delete-many'] = view('core/table::partials.delete', [
+            $actions['delete-many'] = view('Table::partials.delete', [
                 'href'       => $url,
                 'data_class' => get_called_class(),
             ]);

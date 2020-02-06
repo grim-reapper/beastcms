@@ -17,7 +17,7 @@ class InfoTable extends TableAbstract
     /**
      * @var string
      */
-    protected $view = 'core/base::elements.simple-table';
+    protected $view = 'Base::elements.simple-table';
 
     /**
      * @var bool
@@ -52,10 +52,10 @@ class InfoTable extends TableAbstract
         return $this->table
             ->of($this->query())
             ->editColumn('name', function ($item) {
-                return view('core/base::system.partials.info-package-line', compact('item'))->render();
+                return view('Base::system.partials.info-package-line', compact('item'))->render();
             })
             ->editColumn('dependencies', function ($item) {
-                return view('core/base::system.partials.info-dependencies-line', compact('item'))->render();
+                return view('Base::system.partials.info-dependencies-line', compact('item'))->render();
             })
             ->escapeColumns([])
             ->make(true);
@@ -81,12 +81,12 @@ class InfoTable extends TableAbstract
         return [
             'name'         => [
                 'name'  => 'name',
-                'title' => trans('core/base::system.package_name') . ' : ' . trans('core/base::system.version'),
+                'title' => trans('Base::system.package_name') . ' : ' . trans('Base::system.version'),
                 'class' => 'text-left',
             ],
             'dependencies' => [
                 'name'  => 'dependencies',
-                'title' => trans('core/base::system.dependency_name') . ' : ' . trans('core/base::system.version'),
+                'title' => trans('Base::system.dependency_name') . ' : ' . trans('Base::system.version'),
                 'class' => 'text-left',
             ],
         ];

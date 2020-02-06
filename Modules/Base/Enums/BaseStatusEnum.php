@@ -19,7 +19,7 @@ class BaseStatusEnum extends Enum
     /**
      * @var string
      */
-    public static $langPath = 'core/base::enums.statuses';
+    public static $langPath = 'Base::enums.statuses';
 
     /**
      * @return string

@@ -1,7 +1,7 @@
 <ul id='auto-checkboxes' data-name='foo' class="list-unstyled list-feature">
     <li id="mainNode">
         <input type="checkbox" class="hrv-checkbox" id="expandCollapseAllTree">&nbsp;&nbsp;
-        <label for="expandCollapseAllTree" class="label label-default allTree">{{ trans('core/acl::permissions.all') }}</label>
+        <label for="expandCollapseAllTree" class="label label-default allTree">{{ trans('Acl::permissions.all') }}</label>
         <ul>
             @foreach($children['root'] as $element_key => $element)
                 <li class="collapsed" id="node{{ $element_key }}">

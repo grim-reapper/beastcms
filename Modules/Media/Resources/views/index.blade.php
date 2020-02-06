@@ -1,9 +1,13 @@
-@extends('media::layouts.master')
+@extends('Base::layouts.master')
+
+@section('head')
+    {!! RvMedia::renderHeader() !!}
+@endsection
 
 @section('content')
-    <h1>Hello World</h1>
+    {!! RvMedia::renderContent() !!}
+@endsection
 
-    <p>
-        This view is loaded from module: {!! config('media.name') !!}
-    </p>
+@section('javascript')
+    {!! RvMedia::renderFooter() !!}
 @endsection

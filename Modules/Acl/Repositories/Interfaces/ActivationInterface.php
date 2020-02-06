@@ -2,7 +2,7 @@
 
 namespace Modules\Acl\Repositories\Interfaces;
 
-use Modules\Acl\Models\User;
+use Modules\Acl\Entities\User;
 
 interface ActivationInterface
 {

@@ -19,7 +19,7 @@ class EmailHandler
      */
     public function setEmailTemplate($view)
     {
-        config()->set('core.base.general.email_template', $view);
+        config()->set('Base::general.email_template', $view);
     }
 
     /**
@@ -40,7 +40,7 @@ class EmailHandler
             $content = MailVariable::prepareData($content);
             $title = MailVariable::prepareData($title);
 
-            if (config('core.base.general.send_mail_using_job_queue')) {
+            if (config('Base::general.send_mail_using_job_queue')) {
                 dispatch(new SendMailJob($content, $title, $to, $args, $debug));
             } else {
                 event(new SendMailEvent($content, $title, $to, $args, $debug));
@@ -73,10 +73,10 @@ class EmailHandler
             $error = $handler->getHtml($ex);
 
             $this->send(
-                view('core/base::emails.error-reporting', compact('url', 'ex', 'error'))->render(),
+                view('Base::emails.error-reporting', compact('url', 'ex', 'error'))->render(),
                 $exception->getFile(),
-                !empty(config('core.base.general.error_reporting.to')) ?
-                    config('core.base.general.error_reporting.to') :
+                !empty(config('Base::general.error_reporting.to')) ?
+                    config('Base::general.error_reporting.to') :
                     setting('admin_email')
             );
         } catch (Exception $ex) {

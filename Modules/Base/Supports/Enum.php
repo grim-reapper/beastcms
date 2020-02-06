@@ -28,7 +28,7 @@ abstract class Enum implements JsonSerializable
     /**
      * @var string
      */
-    protected static $langPath = 'core/base::enums';
+    protected static $langPath = 'Base::enums';
 
     /**
      * Creates a new value of some type

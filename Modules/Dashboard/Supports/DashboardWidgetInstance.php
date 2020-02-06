@@ -327,7 +327,7 @@ class DashboardWidgetInstance
 
             $data = [
                 'id'   => $widget->id,
-                'view' => view('core/dashboard::widgets.base', compact('widget', 'widgetSetting'))->render(),
+                'view' => view('Dashboard::widgets.base', compact('widget', 'widgetSetting'))->render(),
             ];
 
             if (empty($widgetSetting) || array_key_exists($widgetSetting->order, $widgets)) {
@@ -343,7 +343,7 @@ class DashboardWidgetInstance
 
         $widgets[$this->key] = [
             'id'   => $widget->id,
-            'view' => view('core/dashboard::widgets.stats', compact('widget', 'widgetSetting'))->render(),
+            'view' => view('Dashboard::widgets.stats', compact('widget', 'widgetSetting'))->render(),
         ];
 
         return $widgets;

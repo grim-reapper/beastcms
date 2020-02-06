@@ -22,8 +22,8 @@ class LocaleMiddleware
     {
         app()->setLocale(env('APP_LOCALE', config('app.locale')));
 
-        if ($request->is(config('core.base.general.admin_dir') . '/*') ||
-            $request->is(config('core.base.general.admin_dir'))
+        if ($request->is(config('Base::general.admin_dir') . '/*') ||
+            $request->is(config('Base::general.admin_dir'))
         ) {
             if ($request->session()->has('admin-locale') &&
                 array_key_exists($request->session()->get('admin-locale'), Assets::getAdminLocales())

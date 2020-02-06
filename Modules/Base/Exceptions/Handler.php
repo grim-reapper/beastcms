@@ -114,8 +114,8 @@ class Handler extends ExceptionHandler
         $code = $code == '403' ? '401' : $code;
         $code = $code == '503' ? '500' : $code;
 
-        if ($request->is(config('core.base.general.admin_dir') . '/*') || $request->is(config('core.base.general.admin_dir'))) {
-            return response()->view('core/base::errors.' . $code, [], $code);
+        if ($request->is(config('Base::general.admin_dir') . '/*') || $request->is(config('Base::general.admin_dir'))) {
+            return response()->view('Base::errors.' . $code, [], $code);
         }
 
         if (view()->exists('theme.' . setting('theme') . '::views.' . $code)) {
@@ -144,7 +144,7 @@ class Handler extends ExceptionHandler
                     EmailHandler::sendErrorException($exception);
                 }
 
-                if (config('core.base.general.error_reporting.via_slack',
+                if (config('Base::general.error_reporting.via_slack',
                         false) == true && !$exception instanceof OAuthServerException) {
                     config()->set([
                         'logging.channels.slack.username' => 'Modules BOT',
@@ -167,7 +167,7 @@ class Handler extends ExceptionHandler
      */
     protected function isExceptionFromBot()
     {
-        $ignored_bots = config('core.base.general.error_reporting.ignored_bots', []);
+        $ignored_bots = config('Base::general.error_reporting.ignored_bots', []);
         $agent = array_key_exists('HTTP_USER_AGENT', $_SERVER) ? strtolower($_SERVER['HTTP_USER_AGENT']) : null;
 
         if (empty($agent)) {

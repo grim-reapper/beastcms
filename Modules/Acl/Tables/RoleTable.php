@@ -75,7 +75,7 @@ class RoleTable extends TableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('created_at', function ($item) {
-                return date_from_database($item->created_at, config('core.base.general.date_format.date'));
+                return date_from_database($item->created_at, config('Base::general.date_format.date'));
             })
             ->editColumn('created_by', function ($item) {
                 return $item->author->getFullName();
@@ -122,26 +122,26 @@ class RoleTable extends TableAbstract
         return [
             'id'          => [
                 'name'  => 'roles.id',
-                'title' => trans('core/base::tables.id'),
+                'title' => trans('Base::tables.id'),
                 'width' => '20px',
             ],
             'name'        => [
                 'name'  => 'roles.name',
-                'title' => trans('core/base::tables.name'),
+                'title' => trans('Base::tables.name'),
             ],
             'description' => [
                 'name'  => 'roles.description',
-                'title' => trans('core/base::tables.description'),
+                'title' => trans('Base::tables.description'),
                 'class' => 'text-left',
             ],
             'created_at'  => [
                 'name'  => 'roles.created_at',
-                'title' => trans('core/base::tables.created_at'),
+                'title' => trans('Base::tables.created_at'),
                 'width' => '100px',
             ],
             'created_by'  => [
                 'name'  => 'roles.created_by',
-                'title' => trans('core/acl::permissions.created_by'),
+                'title' => trans('Acl::permissions.created_by'),
                 'width' => '100px',
             ],
         ];
@@ -176,7 +176,7 @@ class RoleTable extends TableAbstract
     {
         return [
             'roles.name' => [
-                'title'    => trans('core/base::tables.name'),
+                'title'    => trans('Base::tables.name'),
                 'type'     => 'text',
                 'validate' => 'required|max:120',
             ],

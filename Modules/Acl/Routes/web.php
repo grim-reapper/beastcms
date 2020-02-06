@@ -16,9 +16,9 @@ use Modules\Acl\Http\Controllers\Auth\LoginController;
 use Modules\Acl\Http\Controllers\Auth\ResetPasswordController;
 use Modules\Acl\Http\Controllers\UserController;
 
-Route::prefix('acl')->group(function() {
-    Route::get('/', 'AclController@index');
-});
+//Route::prefix('acl')->group(function() {
+//    Route::get('/', 'AclController@index');
+//});
 Route::group(['namespace' => 'Modules\Acl\Http\Controllers', 'middleware' => 'web'], function () {
     Route::group(['prefix' => config('Base.general.admin_dir')], function () {
         Route::group(['middleware' => 'guest'], function () {
@@ -48,7 +48,7 @@ Route::group(['namespace' => 'Modules\Acl\Http\Controllers', 'middleware' => 'we
         });
     });
 
-    Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
+    Route::group(['prefix' => config('Base::general.admin_dir'), 'middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'system'], function () {
             Route::resource('users', 'UserController')->except(['edit', 'update']);

@@ -8,7 +8,7 @@
     </div>
     <div class="col-8 widget_pagination">
         <span>@if ($data->total() > 0 ){{ ($data->currentPage() - 1) * $limit + 1 }} @else 0 @endif
-            - {{ $limit < $data->total() ? $data->currentPage() * $limit : $data->total() }} {{ trans('core/base::tables.in') }} {{ $data->total() }} {{ trans('core/base::tables.records') }}</span>
+            - {{ $limit < $data->total() ? $data->currentPage() * $limit : $data->total() }} {{ trans('Base::tables.in') }} {{ $data->total() }} {{ trans('Base::tables.records') }}</span>
         <a class="btn_grey page_previous" href="{{ $data->previousPageUrl() }}"></a>
         <a class="btn_grey page_next" href="{{ $data->nextPageUrl() }}"></a>
     </div>

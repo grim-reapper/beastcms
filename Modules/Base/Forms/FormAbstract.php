@@ -64,7 +64,7 @@ abstract class FormAbstract extends Form
     /**
      * @var string
      */
-    protected $template = 'core/base::forms.form';
+    protected $template = 'Base::forms.form';
 
     /**
      * FormAbstract constructor.
@@ -163,7 +163,7 @@ abstract class FormAbstract extends Form
 
         $meta_box = $this->metaBoxes[$name];
 
-        return view('core/base::forms.partials.meta-box', compact('meta_box'))->render();
+        return view('Base::forms.partials.meta-box', compact('meta_box'))->render();
     }
 
     /**
@@ -197,7 +197,7 @@ abstract class FormAbstract extends Form
     public function getActionButtons(): string
     {
         if ($this->actionButtons === '') {
-            return view('core/base::elements.form-actions')->render();
+            return view('Base::elements.form-actions')->render();
         }
 
         return $this->actionButtons;
@@ -319,7 +319,7 @@ abstract class FormAbstract extends Form
      */
     public function hasTabs(): self
     {
-        $this->setFormOption('template', 'core/base::forms.form-tabs');
+        $this->setFormOption('template', 'Base::forms.form-tabs');
         return $this;
     }
 

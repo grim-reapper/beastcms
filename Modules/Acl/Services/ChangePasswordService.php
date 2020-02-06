@@ -33,7 +33,7 @@ class ChangePasswordService implements ProduceServiceInterface
     {
         if (!$request->user()->isSuperUser()) {
             if (!Hash::check($request->input('old_password'), $request->user()->getAuthPassword())) {
-                return new Exception(trans('core/acl::users.current_password_not_valid'));
+                return new Exception(trans('Acl::users.current_password_not_valid'));
             }
         }
 

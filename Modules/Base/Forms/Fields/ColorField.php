@@ -18,6 +18,6 @@ class ColorField extends FormField
         Assets::addScripts(['colorpicker'])
             ->addStyles(['colorpicker']);
 
-        return 'core/base::forms.fields.color';
+        return 'Base::forms.fields.color';
     }
 }

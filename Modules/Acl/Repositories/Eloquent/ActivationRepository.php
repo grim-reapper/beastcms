@@ -2,8 +2,8 @@
 
 namespace Modules\Acl\Repositories\Eloquent;
 
-use Modules\Acl\Models\Activation;
-use Modules\Acl\Models\User;
+use Modules\Acl\Entities\Activation;
+use Modules\Acl\Entities\User;
 use Modules\Acl\Repositories\Interfaces\ActivationInterface;
 use Modules\Support\Repositories\Eloquent\RepositoriesAbstract;
 use Illuminate\Database\Query\Builder;

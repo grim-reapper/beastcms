@@ -75,7 +75,7 @@ class UserController extends BaseController
      */
     public function index(UserTable $dataTable)
     {
-        page_title()->setTitle(trans('core/acl::users.users'));
+        page_title()->setTitle(trans('Acl::users.users'));
 
         Assets::addScripts(['bootstrap-editable'])
             ->addStyles(['bootstrap-editable']);
@@ -109,7 +109,7 @@ class UserController extends BaseController
         return $response
             ->setPreviousUrl(route('users.index'))
             ->setNextUrl(route('user.profile.view', $user->id))
-            ->setMessage(trans('core/base::notices.create_success_message'));
+            ->setMessage(trans('Base::notices.create_success_message'));
     }
 
     /**
@@ -123,7 +123,7 @@ class UserController extends BaseController
         if ($request->user()->getKey() == $id) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/acl::users.delete_user_logged_in'));
+                ->setMessage(trans('Acl::users.delete_user_logged_in'));
         }
 
         try {
@@ -138,11 +138,11 @@ class UserController extends BaseController
             $this->userRepository->delete($user);
             event(new DeletedContentEvent(USER_MODULE_SCREEN_NAME, $request, $user));
 
-            return $response->setMessage(trans('core/acl::users.deleted'));
+            return $response->setMessage(trans('Acl::users.deleted'));
         } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/acl::users.cannot_delete'));
+                ->setMessage(trans('Acl::users.cannot_delete'));
         }
     }
 
@@ -157,14 +157,14 @@ class UserController extends BaseController
         if (empty($ids)) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.no_select'));
+                ->setMessage(trans('Base::notices.no_select'));
         }
 
         foreach ($ids as $id) {
             if ($request->user()->getKey() == $id) {
                 return $response
                     ->setError()
-                    ->setMessage(trans('core/acl::users.delete_user_logged_in'));
+                    ->setMessage(trans('Acl::users.delete_user_logged_in'));
             }
             try {
                 $user = $this->userRepository->findOrFail($id);
@@ -176,11 +176,11 @@ class UserController extends BaseController
             } catch (Exception $ex) {
                 return $response
                     ->setError()
-                    ->setMessage(trans('core/acl::users.cannot_delete'));
+                    ->setMessage(trans('Acl::users.cannot_delete'));
             }
         }
 
-        return $response->setMessage(trans('core/acl::users.deleted'));
+        return $response->setMessage(trans('Acl::users.deleted'));
     }
 
     /**
@@ -221,7 +221,7 @@ class UserController extends BaseController
         $form = $form->renderForm();
         $passwordForm = $passwordForm->renderForm();
 
-        return view('core/acl::users.profile.base', compact('user', 'form', 'passwordForm', 'canChangeProfile'));
+        return view('Acl::users.profile.base', compact('user', 'form', 'passwordForm', 'canChangeProfile'));
     }
 
     /**
@@ -246,7 +246,7 @@ class UserController extends BaseController
                 if ($users) {
                     return $response
                         ->setError()
-                        ->setMessage(trans('core/acl::users.email_exist'))
+                        ->setMessage(trans('Acl::users.email_exist'))
                         ->withInput();
                 }
             }
@@ -259,7 +259,7 @@ class UserController extends BaseController
                 if ($users) {
                     return $response
                         ->setError()
-                        ->setMessage(trans('core/acl::users.username_exist'))
+                        ->setMessage(trans('Acl::users.username_exist'))
                         ->withInput();
                 }
             }
@@ -269,7 +269,7 @@ class UserController extends BaseController
         $this->userRepository->createOrUpdate($user);
         do_action(USER_ACTION_AFTER_UPDATE_PROFILE, USER_MODULE_SCREEN_NAME, $request, $user);
 
-        return $response->setMessage(trans('core/acl::users.update_profile_success'));
+        return $response->setMessage(trans('Acl::users.update_profile_success'));
     }
 
     /**
@@ -294,7 +294,7 @@ class UserController extends BaseController
                 ->setMessage($result->getMessage());
         }
 
-        return $response->setMessage(trans('core/acl::users.password_update_success'));
+        return $response->setMessage(trans('Acl::users.password_update_success'));
     }
 
     /**
@@ -367,7 +367,7 @@ class UserController extends BaseController
             $this->userRepository->createOrUpdate($user);
 
             return $response
-                ->setMessage(trans('core/acl::users.update_avatar_success'))
+                ->setMessage(trans('Acl::users.update_avatar_success'))
                 ->setData(['url' => Storage::url($data['url'])]);
         } catch (Exception $ex) {
             return $response
@@ -432,7 +432,7 @@ class UserController extends BaseController
 
             return $response
                 ->setNextUrl(route('users.index'))
-                ->setMessage(trans('core/base::system.supper_granted'));
+                ->setMessage(trans('Base::system.supper_granted'));
         } catch (Exception $exception) {
             return $response
                 ->setError()
@@ -452,7 +452,7 @@ class UserController extends BaseController
         if ($request->user()->getKey() == $id) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::system.cannot_revoke_yourself'));
+                ->setMessage(trans('Base::system.cannot_revoke_yourself'));
         }
 
         $user = $this->userRepository->findOrFail($id);
@@ -465,6 +465,6 @@ class UserController extends BaseController
 
         return $response
             ->setNextUrl(route('users.index'))
-            ->setMessage(trans('core/base::system.supper_revoked'));
+            ->setMessage(trans('Base::system.supper_revoked'));
     }
 }

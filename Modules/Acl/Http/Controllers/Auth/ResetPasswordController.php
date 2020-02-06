@@ -38,7 +38,7 @@ class ResetPasswordController extends BaseController
     public function __construct(Repository $config)
     {
         $this->middleware('guest');
-        $this->redirectTo = $config->get('core.base.general.admin_dir');
+        $this->redirectTo = $config->get('Base::general.admin_dir');
     }
 
     /**
@@ -48,7 +48,7 @@ class ResetPasswordController extends BaseController
      */
     public function showResetForm(Request $request, $token = null)
     {
-        page_title()->setTitle(trans('core/acl::auth.reset.title'));
+        page_title()->setTitle(trans('Acl::auth.reset.title'));
 
         $email = $request->email;
         Assets::addScripts(['jquery-validation'])
@@ -67,6 +67,6 @@ class ResetPasswordController extends BaseController
                 'cookie',
             ]);
 
-        return view('core/acl::auth.reset', compact('email', 'token'));
+        return view('Acl::auth.reset', compact('email', 'token'));
     }
 }

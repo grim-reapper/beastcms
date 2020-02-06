@@ -34,6 +34,6 @@ class HtmlField extends FormField
      */
     protected function getTemplate()
     {
-        return 'core/base::forms.fields.html';
+        return 'Base::forms.fields.html';
     }
 }

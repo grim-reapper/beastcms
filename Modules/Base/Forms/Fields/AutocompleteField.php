@@ -14,6 +14,6 @@ class AutocompleteField extends SelectType
      */
     protected function getTemplate()
     {
-        return 'core/base::forms.fields.autocomplete';
+        return 'Base::forms.fields.autocomplete';
     }
 }

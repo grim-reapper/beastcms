@@ -2,105 +2,87 @@
 
 namespace Modules\Media\Providers;
 
+use Modules\Base\Supports\Helper;
+use Modules\Base\Traits\LoadAndPublishDataTrait;
+use Modules\Media\Commands\DeleteThumbnailCommand;
+use Modules\Media\Commands\GenerateThumbnailCommand;
+use Modules\Media\Facades\RvMediaFacade;
+use Modules\Media\Entities\MediaFile;
+use Modules\Media\Entities\MediaFolder;
+use Modules\Media\Entities\MediaSetting;
+use Modules\Media\Repositories\Caches\MediaFileCacheDecorator;
+use Modules\Media\Repositories\Caches\MediaFolderCacheDecorator;
+use Modules\Media\Repositories\Caches\MediaSettingCacheDecorator;
+use Modules\Media\Repositories\Eloquent\MediaFileRepository;
+use Modules\Media\Repositories\Eloquent\MediaFolderRepository;
+use Modules\Media\Repositories\Eloquent\MediaSettingRepository;
+use Modules\Media\Repositories\Interfaces\MediaFileInterface;
+use Modules\Media\Repositories\Interfaces\MediaFolderInterface;
+use Modules\Media\Repositories\Interfaces\MediaSettingInterface;
+use Event;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
+/**
+ * @since 02/07/2016 09:50 AM
+ */
 class MediaServiceProvider extends ServiceProvider
 {
-    /**
-     * Boot the application events.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->registerTranslations();
-        $this->registerConfig();
-        $this->registerViews();
-        $this->registerFactories();
-        $this->loadMigrationsFrom(module_path('Media', 'Database/Migrations'));
-    }
+    use LoadAndPublishDataTrait;
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
     public function register()
     {
-        $this->app->register(RouteServiceProvider::class);
+        Helper::autoload(__DIR__ . '/../helpers');
+
+        $this->app->bind(MediaFileInterface::class, function () {
+            return new MediaFileCacheDecorator(
+                new MediaFileRepository(new MediaFile),
+                MEDIA_GROUP_CACHE_KEY
+            );
+        });
+
+        $this->app->bind(MediaFolderInterface::class, function () {
+            return new MediaFolderCacheDecorator(
+                new MediaFolderRepository(new MediaFolder),
+                MEDIA_GROUP_CACHE_KEY
+            );
+        });
+
+        $this->app->bind(MediaSettingInterface::class, function () {
+            return new MediaSettingCacheDecorator(
+                new MediaSettingRepository(new MediaSetting)
+            );
+        });
+
+        AliasLoader::getInstance()->alias('RvMedia', RvMediaFacade::class);
     }
 
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
+    public function boot()
     {
-        $this->publishes([
-            module_path('Media', 'Config/config.php') => config_path('media.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            module_path('Media', 'Config/config.php'), 'media'
-        );
-    }
+        $this->setNamespace('Media')
+            ->loadAndPublishConfigurations(['permissions', 'media'])
+            ->loadMigrations()
+            ->loadAndPublishTranslations()
+            ->loadAndPublishViews()
+            ->loadRoutes()
+            ->publishAssets();
 
-    /**
-     * Register views.
-     *
-     * @return void
-     */
-    public function registerViews()
-    {
-        $viewPath = resource_path('views/modules/media');
+        Event::listen(RouteMatched::class, function () {
+            dashboard_menu()->registerItem([
+                'id'          => 'cms-core-media',
+                'priority'    => 995,
+                'parent_id'   => null,
+                'name'        => 'Media::media.menu_name',
+                'icon'        => 'far fa-images',
+                'url'         => route('media.index'),
+                'permissions' => ['media.index'],
+            ]);
+        });
 
-        $sourcePath = module_path('Media', 'Resources/views');
-
-        $this->publishes([
-            $sourcePath => $viewPath
-        ],'views');
-
-        $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/media';
-        }, \Config::get('view.paths')), [$sourcePath]), 'media');
-    }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/media');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'media');
-        } else {
-            $this->loadTranslationsFrom(module_path('Media', 'Resources/lang'), 'media');
-        }
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
-            app(Factory::class)->load(module_path('Media', 'Database/factories'));
-        }
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [];
+        $this->commands([
+            GenerateThumbnailCommand::class,
+            DeleteThumbnailCommand::class,
+        ]);
     }
 }

@@ -121,7 +121,7 @@ class DashboardMenu
         $currentUrl = URL::full();
 
         $prefix = request()->route()->getPrefix();
-        if (!$prefix || $prefix === config('core.base.general.admin_dir')) {
+        if (!$prefix || $prefix === config('Base::general.admin_dir')) {
             $uri = explode('/', request()->route()->uri());
             $prefix = end($uri);
         }

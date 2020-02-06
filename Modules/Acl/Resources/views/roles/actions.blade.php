@@ -7,13 +7,13 @@
     <div class="widget-body">
         <div class="btn-set">
             @if ($role && $role->id)
-                <a href="{{ route('roles.duplicate', [$role->id]) }}" class="btn btn-warning"><i class="fa fa-copy"></i> {{ trans('core/acl::permissions.duplicate') }}</a>
+                <a href="{{ route('roles.duplicate', [$role->id]) }}" class="btn btn-warning"><i class="fa fa-copy"></i> {{ trans('Acl::permissions.duplicate') }}</a>
             @endif
             <button type="submit" name="submit" value="save" class="btn btn-info">
-                <i class="fa fa-save"></i> {{ trans('core/base::forms.save') }}
+                <i class="fa fa-save"></i> {{ trans('Base::forms.save') }}
             </button>
             <button type="submit" name="submit" value="apply" class="btn btn-success">
-                <i class="fa fa-check-circle"></i> {{ trans('core/base::forms.save_and_continue') }}
+                <i class="fa fa-check-circle"></i> {{ trans('Base::forms.save_and_continue') }}
             </button>
         </div>
     </div>
@@ -23,13 +23,13 @@
     {!! Breadcrumbs::render('main', page_title()->getTitle(false)) !!}
     <div class="btn-set">
         @if ($role && $role->id)
-            <a href="{{ route('roles.duplicate', [$role->id]) }}" class="btn btn-warning"><i class="fa fa-copy"></i> {{ trans('core/acl::permissions.duplicate') }}</a>
+            <a href="{{ route('roles.duplicate', [$role->id]) }}" class="btn btn-warning"><i class="fa fa-copy"></i> {{ trans('Acl::permissions.duplicate') }}</a>
         @endif
         <button type="submit" name="submit" value="save" class="btn btn-info">
-            <i class="fa fa-save"></i> {{ trans('core/base::forms.save') }}
+            <i class="fa fa-save"></i> {{ trans('Base::forms.save') }}
         </button>
         <button type="submit" name="submit" value="apply" class="btn btn-success">
-            <i class="fa fa-check-circle"></i> {{ trans('core/base::forms.save_and_continue') }}
+            <i class="fa fa-check-circle"></i> {{ trans('Base::forms.save_and_continue') }}
         </button>
     </div>
 </div>

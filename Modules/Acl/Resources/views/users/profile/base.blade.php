@@ -1,4 +1,4 @@
-@extends('core/base::layouts.master')
+@extends('Base::layouts.master')
 
 @section('content')
     <div class="user-profile row">
@@ -40,7 +40,7 @@
                         <div class="modal-content">
                             <form class="avatar-form" method="post" action="{{ route('users.profile.image', $user->id) }}" enctype="multipart/form-data">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="avatar-modal-label"><i class="til_img"></i><strong>{{ trans('core/acl::users.change_profile_image') }}</strong></h4>
+                                    <h4 class="modal-title" id="avatar-modal-label"><i class="til_img"></i><strong>{{ trans('Acl::users.change_profile_image') }}</strong></h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                         <span aria-hidden="true">×</span>
                                     </button>
@@ -55,11 +55,11 @@
                                             <input class="avatar-data" name="avatar_data" type="hidden">
                                             <input type="hidden" name="user_id" value="{{ $user->id }}"/>
                                             {!! Form::token() !!}
-                                            <label for="avatarInput">{{ trans('core/acl::users.new_image') }}</label>
+                                            <label for="avatarInput">{{ trans('Acl::users.new_image') }}</label>
                                             <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
                                         </div>
 
-                                        <div class="loading" tabindex="-1" role="img" aria-label="{{ trans('core/acl::users.loading') }}"></div>
+                                        <div class="loading" tabindex="-1" role="img" aria-label="{{ trans('Acl::users.loading') }}"></div>
 
                                         <!-- Crop and preview -->
                                         <div class="row">
@@ -75,8 +75,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('core/acl::users.close') }}</button>
-                                    <button class="btn btn-primary avatar-save" type="submit">{{ trans('core/acl::users.save') }}</button>
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('Acl::users.close') }}</button>
+                                    <button class="btn btn-primary avatar-save" type="submit">{{ trans('Acl::users.save') }}</button>
                                 </div>
                             </form>
                         </div>
@@ -90,11 +90,11 @@
                 <div class="tabbable-custom">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a href="#tab_1_1" class="nav-link active" data-toggle="tab" aria-expanded="true">{{ trans('core/acl::users.info.title') }}</a>
+                            <a href="#tab_1_1" class="nav-link active" data-toggle="tab" aria-expanded="true">{{ trans('Acl::users.info.title') }}</a>
                         </li>
                         @if ($canChangeProfile)
                             <li class="nav-item">
-                                <a href="#tab_1_3" class="nav-link" data-toggle="tab" aria-expanded="false">{{ trans('core/acl::users.change_password') }}</a>
+                                <a href="#tab_1_3" class="nav-link" data-toggle="tab" aria-expanded="false">{{ trans('Acl::users.change_password') }}</a>
                             </li>
                         @endif
                         {!! apply_filters(ACL_FILTER_PROFILE_FORM_TABS, null) !!}

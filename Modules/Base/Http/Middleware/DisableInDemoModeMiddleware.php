@@ -46,7 +46,7 @@ class DisableInDemoModeMiddleware
             return $this->httpResponse
                 ->setError()
                 ->withInput()
-                ->setMessage(trans('core/base::system.disabled_in_demo_mode'))
+                ->setMessage(trans('Base::system.disabled_in_demo_mode'))
                 ->toResponse($request);
         }
 

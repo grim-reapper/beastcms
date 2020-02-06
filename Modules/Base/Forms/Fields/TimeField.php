@@ -18,6 +18,6 @@ class TimeField extends FormField
         Assets::addScripts(['timepicker'])
             ->addStyles(['timepicker']);
 
-        return 'core/base::forms.fields.time';
+        return 'Base::forms.fields.time';
     }
 }

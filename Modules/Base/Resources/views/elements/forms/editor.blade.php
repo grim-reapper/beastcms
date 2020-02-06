@@ -8,7 +8,7 @@
             <a href="#" class="btn_gallery btn btn-primary"
                data-result="{{ $result }}"
                data-multiple="true"
-               data-action="media-insert-{{ setting('rich_editor', config('core.base.general.editor.primary')) }}">
+               data-action="media-insert-{{ setting('rich_editor', config('Base::general.editor.primary')) }}">
                 <i class="far fa-image"></i> {{ trans('core/media::media.add') }}
             </a>
         </span>
@@ -128,7 +128,7 @@
 
 {!! Form::textarea($name, $value, $attributes) !!}
 
-@if (setting('rich_editor', config('core.base.general.editor.primary')) === 'tinymce')
+@if (setting('rich_editor', config('Base::general.editor.primary')) === 'tinymce')
     @push('footer')
         <script>
             function setImageValue(file) {

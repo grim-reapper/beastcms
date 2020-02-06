@@ -5,7 +5,13 @@
     "keywords": [],
     "order": 0,
     "providers": [
-        "Modules\\Base\\Providers\\BaseServiceProvider"
+        "Modules\\Base\\Providers\\BaseServiceProvider",
+        "Modules\\Base\\Providers\\CommandServiceProvider",
+        "Modules\\Base\\Providers\\EventServiceProvider",
+        "Modules\\Base\\Providers\\BreadcrumbsServiceProvider",
+        "Modules\\Base\\Providers\\ComposerServiceProvider",
+        "Modules\\Base\\Providers\\MailConfigServiceProvider",
+        "Modules\\Base\\Providers\\FormServiceProvider"
     ],
     "aliases": {
         "Assets": "Modules\\Base\\Facades\\AssetsFacade",

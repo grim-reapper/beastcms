@@ -28,7 +28,7 @@ trait HasDeleteManyItemsTrait
         if (empty($ids)) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.no_select'));
+                ->setMessage(trans('Base::notices.no_select'));
         }
 
         foreach ($ids as $id) {
@@ -41,6 +41,6 @@ trait HasDeleteManyItemsTrait
             event(new DeletedContentEvent($screen, $request, $item));
         }
 
-        return $response->setMessage(trans('core/base::notices.delete_success_message'));
+        return $response->setMessage(trans('Base::notices.delete_success_message'));
     }
 }

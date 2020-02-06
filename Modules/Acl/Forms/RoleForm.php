@@ -34,24 +34,24 @@ class RoleForm extends FormAbstract
             ->setValidatorClass(RoleCreateRequest::class)
             ->withCustomFields()
             ->add('name', 'text', [
-                'label'      => trans('core/base::forms.name'),
+                'label'      => trans('Base::forms.name'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
-                    'placeholder'  => trans('core/base::forms.name_placeholder'),
+                    'placeholder'  => trans('Base::forms.name_placeholder'),
                     'data-counter' => 120,
                 ],
             ])
             ->add('description', 'textarea', [
-                'label'      => trans('core/base::forms.description'),
+                'label'      => trans('Base::forms.description'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
                     'rows'         => 4,
-                    'placeholder'  => trans('core/base::forms.description_placeholder'),
+                    'placeholder'  => trans('Base::forms.description_placeholder'),
                     'data-counter' => 400,
                 ],
             ])
             ->add('is_default', 'checkbox', [
-                'label'      => trans('core/base::forms.is_default'),
+                'label'      => trans('Base::forms.is_default'),
                 'label_attr' => ['class' => 'control-label'],
                 'attr'       => [
                     'class' => 'hrv-checkbox',
@@ -60,11 +60,11 @@ class RoleForm extends FormAbstract
             ])
             ->addMetaBoxes([
                 'permissions' => [
-                    'title'   => trans('core/acl::permissions.permission_flags'),
-                    'content' => view('core/acl::roles.permissions', compact('active', 'flags', 'children'))->render(),
+                    'title'   => trans('Acl::permissions.permission_flags'),
+                    'content' => view('Acl::roles.permissions', compact('active', 'flags', 'children'))->render(),
                 ],
             ])
-            ->setActionButtons(view('core/acl::roles.actions', ['role' => $this->getModel()])->render());
+            ->setActionButtons(view('Acl::roles.actions', ['role' => $this->getModel()])->render());
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('core/base::layouts.master')
+@extends('Base::layouts.master')
 @section('content')
     {!! Form::open(['route' => ['settings.media']]) !!}
     <div class="max-width-1200">
@@ -6,10 +6,10 @@
 
             <div class="flexbox-annotated-section-annotation">
                 <div class="annotated-section-title pd-all-20">
-                    <h2>{{ trans('core/setting::setting.media.title') }}</h2>
+                    <h2>{{ trans('Setting::setting.media.title') }}</h2>
                 </div>
                 <div class="annotated-section-description pd-all-20 p-none-t">
-                    <p class="color-note">{{ trans('core/setting::setting.media.description') }}</p>
+                    <p class="color-note">{{ trans('Setting::setting.media.description') }}</p>
                 </div>
             </div>
 
@@ -17,7 +17,7 @@
                 <div class="wrapper-content pd-all-20">
                     <div class="form-group">
                         <label class="text-title-field"
-                               for="media_driver">{{ trans('core/setting::setting.media.driver') }}
+                               for="media_driver">{{ trans('Setting::setting.media.driver') }}
                         </label>
                         <div class="ui-select-wrapper">
                             <select name="media_driver" class="ui-select" id="media_driver">
@@ -34,31 +34,31 @@
                     <div class="s3-config-wrapper" @if (config('filesystems.default') !== 's3') style="display: none;" @endif>
                         <div class="form-group">
                             <label class="text-title-field"
-                                   for="media_aws_access_key_id">{{ trans('core/setting::setting.media.aws_access_key_id') }}</label>
+                                   for="media_aws_access_key_id">{{ trans('Setting::setting.media.aws_access_key_id') }}</label>
                             <input type="text" class="next-input" name="media_aws_access_key_id" id="media_aws_access_key_id"
                                    value="{{ config('filesystems.disks.s3.key') }}" placeholder="Ex: AKIAIKYXBSNBXXXXXX">
                         </div>
                         <div class="form-group">
                             <label class="text-title-field"
-                                   for="media_aws_secret_key">{{ trans('core/setting::setting.media.aws_secret_key') }}</label>
+                                   for="media_aws_secret_key">{{ trans('Setting::setting.media.aws_secret_key') }}</label>
                             <input type="text" class="next-input" name="media_aws_secret_key" id="media_aws_secret_key"
                                    value="{{ config('filesystems.disks.s3.secret') }}" placeholder="Ex: +fivlGCeTJCVVnzpM2WfzzrFIMLHGhxxxxxxx">
                         </div>
                         <div class="form-group">
                             <label class="text-title-field"
-                                   for="media_aws_default_region">{{ trans('core/setting::setting.media.aws_default_region') }}</label>
+                                   for="media_aws_default_region">{{ trans('Setting::setting.media.aws_default_region') }}</label>
                             <input type="text" class="next-input" name="media_aws_default_region" id="media_aws_default_region"
                                    value="{{ config('filesystems.disks.s3.region') }}" placeholder="Ex: ap-southeast-1">
                         </div>
                         <div class="form-group">
                             <label class="text-title-field"
-                                   for="media_aws_bucket">{{ trans('core/setting::setting.media.aws_bucket') }}</label>
+                                   for="media_aws_bucket">{{ trans('Setting::setting.media.aws_bucket') }}</label>
                             <input type="text" class="next-input" name="media_aws_bucket" id="media_aws_bucket"
                                    value="{{ config('filesystems.disks.s3.bucket') }}" placeholder="Ex: Modules">
                         </div>
                         <div class="form-group">
                             <label class="text-title-field"
-                                   for="media_aws_url">{{ trans('core/setting::setting.media.aws_url') }}</label>
+                                   for="media_aws_url">{{ trans('Setting::setting.media.aws_url') }}</label>
                             <input type="text" class="next-input" name="media_aws_url" id="media_aws_url"
                                    value="{{ config('filesystems.disks.s3.url') }}" placeholder="Ex: https://s3-ap-southeast-1.amazonaws.com/Modules">
                         </div>
@@ -74,7 +74,7 @@
                 &nbsp;
             </div>
             <div class="flexbox-annotated-section-content">
-                <button class="btn btn-info" type="submit">{{ trans('core/setting::setting.save_settings') }}</button>
+                <button class="btn btn-info" type="submit">{{ trans('Setting::setting.save_settings') }}</button>
             </div>
         </div>
     </div>

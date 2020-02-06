@@ -49,7 +49,7 @@ class MailVariable
             'footer'           => get_setting_email_template_content('core', 'base', 'footer'),
             'site_title'       => setting('admin_title'),
             'site_url'         => url(''),
-            'site_logo'        => setting('admin_logo') ? get_image_url(setting('admin_logo')) : url(config('core.base.general.logo')),
+            'site_logo'        => setting('admin_logo') ? get_image_url(setting('admin_logo')) : url(config('Base::general.logo')),
             'date_time'        => now(config('app.timezone'))->toDateTimeString(),
             'date_year'        => now(config('app.timezone'))->format('Y'),
             'site_admin_email' => setting('admin_email'),

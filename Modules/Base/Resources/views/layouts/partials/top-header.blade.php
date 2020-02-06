@@ -3,7 +3,7 @@
 
             <div class="page-logo">
                 <a href="{{ route('dashboard.index') }}">
-                    <img src="{{ setting('admin_logo') ? get_image_url(setting('admin_logo')) : url(config('core.base.general.logo')) }}" alt="logo" class="logo-default" />
+                    <img src="{{ setting('admin_logo') ? get_image_url(setting('admin_logo')) : url(config('Base.general.logo')) }}" alt="logo" class="logo-default" />
                 </a>
                 @auth
                     <div class="menu-toggler sidebar-toggler">
@@ -21,7 +21,7 @@
             <div class="top-menu">
                 <ul class="nav navbar-nav float-right">
                     @auth
-                        @if (config('core.base.general.admin_dir') != '')
+                        @if (config('Base.general.admin_dir') != '')
                             <li class="dropdown">
                                 <a class="dropdown-toggle dropdown-header-name" style="padding-right: 10px" href="{{ url('/') }}" target="_blank"><i class="fa fa-globe"></i> <span class="d-none d-sm-inline">{{ trans('Base::layouts.view_website') }}</span> </a>
                             </li>

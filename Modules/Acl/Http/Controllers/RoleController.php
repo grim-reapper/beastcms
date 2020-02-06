@@ -47,7 +47,7 @@ class RoleController extends BaseController
      */
     public function index(RoleTable $dataTable)
     {
-        page_title()->setTitle(trans('core/acl::permissions.role_permission'));
+        page_title()->setTitle(trans('Acl::permissions.role_permission'));
 
         return $dataTable->renderTable();
     }
@@ -67,7 +67,7 @@ class RoleController extends BaseController
 
         Helper::executeCommand('cache:clear');
 
-        return $response->setMessage(trans('core/acl::permissions.delete_success'));
+        return $response->setMessage(trans('Acl::permissions.delete_success'));
     }
 
     /**
@@ -84,7 +84,7 @@ class RoleController extends BaseController
         if (empty($ids)) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.no_select'));
+                ->setMessage(trans('Base::notices.no_select'));
         }
 
         foreach ($ids as $id) {
@@ -94,7 +94,7 @@ class RoleController extends BaseController
 
         Helper::executeCommand('cache:clear');
 
-        return $response->setMessage(trans('core/base::notices.delete_success_message'));
+        return $response->setMessage(trans('Base::notices.delete_success_message'));
     }
 
     /**
@@ -106,7 +106,7 @@ class RoleController extends BaseController
     {
         $role = $this->roleRepository->findOrFail($id);
 
-        page_title()->setTitle(trans('core/acl::permissions.details') . ' - ' . e($role->name));
+        page_title()->setTitle(trans('Acl::permissions.details') . ' - ' . e($role->name));
 
         return $formBuilder->create(RoleForm::class, ['model' => $role])->renderForm();
     }
@@ -136,7 +136,7 @@ class RoleController extends BaseController
         return $response
             ->setPreviousUrl(route('roles.index'))
             ->setNextUrl(route('roles.edit', $id))
-            ->setMessage(trans('core/acl::permissions.modified_success'));
+            ->setMessage(trans('Acl::permissions.modified_success'));
     }
 
     /**
@@ -163,7 +163,7 @@ class RoleController extends BaseController
      */
     public function create(FormBuilder $formBuilder)
     {
-        page_title()->setTitle(trans('core/acl::permissions.create_role'));
+        page_title()->setTitle(trans('Acl::permissions.create_role'));
 
         return $formBuilder->create(RoleForm::class)->renderForm();
     }
@@ -188,7 +188,7 @@ class RoleController extends BaseController
         return $response
             ->setPreviousUrl(route('roles.index'))
             ->setNextUrl(route('roles.edit', $role->id))
-            ->setMessage(trans('core/acl::permissions.create_success'));
+            ->setMessage(trans('Acl::permissions.create_success'));
     }
 
     /**
@@ -212,7 +212,7 @@ class RoleController extends BaseController
         return $response
             ->setPreviousUrl(route('roles.edit', $baseRole->id))
             ->setNextUrl(route('roles.edit', $role->id))
-            ->setMessage(trans('core/acl::permissions.duplicated_success'));
+            ->setMessage(trans('Acl::permissions.duplicated_success'));
     }
 
     /**

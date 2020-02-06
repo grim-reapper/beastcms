@@ -44,7 +44,7 @@ class ForgotPasswordController extends BaseController
      */
     public function showLinkRequestForm()
     {
-        page_title()->setTitle(trans('core/acl::auth.reset.title'));
+        page_title()->setTitle(trans('Acl::auth.reset.title'));
 
         Assets::addScripts(['jquery-validation'])
             ->addScriptsDirectly('vendor/core/js/login.js')
@@ -62,7 +62,7 @@ class ForgotPasswordController extends BaseController
                 'cookie',
             ]);
 
-        return view('core/acl::auth.forgot-password');
+        return view('Acl::auth.forgot-password');
     }
 
     /**

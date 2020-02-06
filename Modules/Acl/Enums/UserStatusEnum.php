@@ -17,7 +17,7 @@ class UserStatusEnum extends Enum
     /**
      * @var string
      */
-    public static $langPath = 'core/acl::users.statuses';
+    public static $langPath = 'Acl::users.statuses';
 
     /**
      * @return string

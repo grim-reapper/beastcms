@@ -2,17 +2,17 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header bg-danger">
-                <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('core/dashboard::dashboard.confirm_hide') }}</strong></h4>
+                <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('Dashboard::dashboard.confirm_hide') }}</strong></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
 
             <div class="modal-body with-padding">
-                <p>{{ trans('core/dashboard::dashboard.hide_message') }}</p>
+                <p>{{ trans('Dashboard::dashboard.hide_message') }}</p>
             </div>
 
             <div class="modal-footer">
-                <a class="float-left btn btn-danger" href="#" id="hide-widget-confirm-bttn">{{ trans('core/dashboard::dashboard.confirm_hide_btn') }}</a>
-                <button class="float-right btn btn-primary" data-dismiss="modal">{{ trans('core/dashboard::dashboard.cancel_hide_btn') }}</button>
+                <a class="float-left btn btn-danger" href="#" id="hide-widget-confirm-bttn">{{ trans('Dashboard::dashboard.confirm_hide_btn') }}</a>
+                <button class="float-right btn btn-primary" data-dismiss="modal">{{ trans('Dashboard::dashboard.cancel_hide_btn') }}</button>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <div class="modal-content">
             {!! Form::open(['route' => 'dashboard.hide_widgets']) !!}
                 <div class="modal-header">
-                    <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('core/dashboard::dashboard.manage_widgets') }}</strong></h4>
+                    <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('Dashboard::dashboard.manage_widgets') }}</strong></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -41,8 +41,8 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">{{ trans('core/base::forms.cancel') }}</button>
-                    <button type="submit" class="btn btn-primary">{{ trans('core/base::forms.save') }}</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">{{ trans('Base::forms.cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ trans('Base::forms.save') }}</button>
                 </div>
             {!! Form::close() !!}
         </div>

@@ -206,7 +206,7 @@ class Base
 
         $chart = $this;
 
-        return view('core/base::charts.chart', compact('chart'))->render();
+        return view('Base::charts.chart', compact('chart'))->render();
     }
 
     /**

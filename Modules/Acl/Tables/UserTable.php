@@ -84,14 +84,14 @@ class UserTable extends TableAbstract
                 return anchor_link(route('user.profile.view', $item->id), $item->username);
             })
             ->editColumn('created_at', function ($item) {
-                return date_from_database($item->created_at, config('core.base.general.date_format.date'));
+                return date_from_database($item->created_at, config('Base::general.date_format.date'));
             })
             ->editColumn('role_name', function ($item) {
                 if (!Auth::user()->hasPermission('users.edit')) {
                     return $item->role_name;
                 }
 
-                return view('core/acl::users.partials.role', ['item' => $item])->render();
+                return view('Acl::users.partials.role', ['item' => $item])->render();
             })
             ->editColumn('super_user', function ($item) {
                 return $item->super_user ? __('Yes') : __('No');
@@ -120,7 +120,7 @@ class UserTable extends TableAbstract
                 }
 
                 return apply_filters(ACL_FILTER_USER_TABLE_ACTIONS,
-                    $action . view('core/acl::users.partials.actions', ['item' => $item])->render(), $item);
+                    $action . view('Acl::users.partials.actions', ['item' => $item])->render(), $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -162,27 +162,27 @@ class UserTable extends TableAbstract
         return [
             'username'   => [
                 'name'  => 'users.username',
-                'title' => trans('core/acl::users.username'),
+                'title' => trans('Acl::users.username'),
                 'class' => 'text-left',
             ],
             'email'      => [
                 'name'  => 'users.email',
-                'title' => trans('core/acl::users.email'),
+                'title' => trans('Acl::users.email'),
                 'class' => 'text-left',
             ],
             'role_name'  => [
                 'name'       => 'role_name',
-                'title'      => trans('core/acl::users.role'),
+                'title'      => trans('Acl::users.role'),
                 'searchable' => false,
             ],
             'created_at' => [
                 'name'  => 'users.created_at',
-                'title' => trans('core/base::tables.created_at'),
+                'title' => trans('Base::tables.created_at'),
                 'width' => '100px',
             ],
             'status'     => [
                 'name'  => 'users.updated_at',
-                'title' => trans('core/base::tables.status'),
+                'title' => trans('Base::tables.status'),
                 'width' => '100px',
             ],
             'super_user' => [
@@ -240,23 +240,23 @@ class UserTable extends TableAbstract
     {
         return [
             'users.username'   => [
-                'title'    => trans('core/acl::users.username'),
+                'title'    => trans('Acl::users.username'),
                 'type'     => 'text',
                 'validate' => 'required|max:120',
             ],
             'users.email'      => [
-                'title'    => trans('core/base::tables.email'),
+                'title'    => trans('Base::tables.email'),
                 'type'     => 'text',
                 'validate' => 'required|max:120|email',
             ],
             'users.status'     => [
-                'title'    => trans('core/base::tables.status'),
+                'title'    => trans('Base::tables.status'),
                 'type'     => 'select',
                 'choices'  => UserStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', UserStatusEnum::values()),
             ],
             'users.created_at' => [
-                'title' => trans('core/base::tables.created_at'),
+                'title' => trans('Base::tables.created_at'),
                 'type'  => 'date',
             ],
         ];
@@ -269,7 +269,7 @@ class UserTable extends TableAbstract
     {
         return [
             'operations' => [
-                'title'      => trans('core/base::tables.operations'),
+                'title'      => trans('Base::tables.operations'),
                 'width'      => '350px',
                 'class'      => 'text-right',
                 'orderable'  => false,
@@ -290,13 +290,13 @@ class UserTable extends TableAbstract
     public function saveBulkChanges(array $ids, string $inputKey, ?string $inputValue): bool
     {
         if (app()->environment('demo')) {
-            throw new Exception(trans('core/base::system.disabled_in_demo_mode'));
+            throw new Exception(trans('Base::system.disabled_in_demo_mode'));
         }
 
         if ($inputKey === 'users.status') {
             foreach ($ids as $id) {
                 if ($inputValue == UserStatusEnum::DEACTIVATED && Auth::user()->getKey() == $id) {
-                    throw new Exception(trans('core/acl::users.lock_user_logged_in'));
+                    throw new Exception(trans('Acl::users.lock_user_logged_in'));
                 }
 
                 $user = $this->repository->findOrFail($id);

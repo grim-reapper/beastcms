@@ -1,4 +1,4 @@
-@extends('core/base::layouts.master')
+@extends('Base::layouts.master')
 @section('content')
     <div class="table-wrapper">
         @if ($table->isHasFilter())
@@ -13,7 +13,7 @@
                     <div class="wrapper-action">
                         @if ($actions)
                             <div class="btn-group">
-                                <a class="btn btn-secondary dropdown-toggle" href="#" data-toggle="dropdown">{{ trans('core/table::general.bulk_actions') }}
+                                <a class="btn btn-secondary dropdown-toggle" href="#" data-toggle="dropdown">{{ trans('Table::general.bulk_actions') }}
                                 </a>
                                 <ul class="dropdown-menu">
                                     @foreach ($actions as $action)
@@ -25,7 +25,7 @@
                             </div>
                         @endif
                         @if ($table->isHasFilter())
-                            <button class="btn btn-primary btn-show-table-options">{{ trans('core/table::general.filters') }}</button>
+                            <button class="btn btn-primary btn-show-table-options">{{ trans('Table::general.filters') }}</button>
                         @endif
                     </div>
                 </div>
@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-    @include('core/table::modal')
+    @include('Table::modal')
 @stop
 @section('javascript')
     {!! $dataTable->scripts() !!}
