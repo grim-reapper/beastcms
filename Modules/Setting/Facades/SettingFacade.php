@@ -1,9 +1,9 @@
 <?php
 
-
 namespace Modules\Setting\Facades;
+
+use Modules\Setting\Supports\SettingStore;
 use Illuminate\Support\Facades\Facade;
-use Modules\Setting\Support\SettingStore;
 
 class SettingFacade extends Facade
 {

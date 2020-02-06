@@ -1,0 +1,13 @@
+{
+    "name": "Acl",
+    "alias": "acl",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Acl\\Providers\\AclServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

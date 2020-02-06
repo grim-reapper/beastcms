@@ -54,13 +54,13 @@
                             <label class="text-title-field"
                                    for="media_aws_bucket">{{ trans('core/setting::setting.media.aws_bucket') }}</label>
                             <input type="text" class="next-input" name="media_aws_bucket" id="media_aws_bucket"
-                                   value="{{ config('filesystems.disks.s3.bucket') }}" placeholder="Ex: botble">
+                                   value="{{ config('filesystems.disks.s3.bucket') }}" placeholder="Ex: Modules">
                         </div>
                         <div class="form-group">
                             <label class="text-title-field"
                                    for="media_aws_url">{{ trans('core/setting::setting.media.aws_url') }}</label>
                             <input type="text" class="next-input" name="media_aws_url" id="media_aws_url"
-                                   value="{{ config('filesystems.disks.s3.url') }}" placeholder="Ex: https://s3-ap-southeast-1.amazonaws.com/botble">
+                                   value="{{ config('filesystems.disks.s3.url') }}" placeholder="Ex: https://s3-ap-southeast-1.amazonaws.com/Modules">
                         </div>
                     </div>
 

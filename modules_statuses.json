@@ -2,5 +2,10 @@
     "Core": true,
     "Core\\\\Base": true,
     "Base": true,
-    "Setting": true
+    "Setting": true,
+    "Acl": true,
+    "Media": true,
+    "Support": true,
+    "Dashboard": true,
+    "Table": true
 }

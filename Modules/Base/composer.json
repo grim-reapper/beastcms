@@ -7,13 +7,41 @@
             "email": "n.widart@gmail.com"
         }
     ],
+    "require": {
+        "barryvdh/laravel-dompdf": "^0.8.2",
+        "botble/assets": "^1.0",
+        "davejamesmiller/laravel-breadcrumbs": "^5.3",
+        "proengsoft/laravel-jsvalidation": "^2.5",
+        "intervention/image": "^2.4",
+        "kris/laravel-form-builder": "^1.21",
+        "laravelcollective/html": "^6.0",
+        "ralouphie/mimey": "^2.0",
+        "tightenco/ziggy": "^0.8",
+        "yajra/laravel-datatables-buttons": "^4.7",
+        "yajra/laravel-datatables-oracle": "^9.6",
+        "guzzlehttp/guzzle": "^6.3",
+        "mews/purifier": "~3.1",
+        "symfony/var-exporter": "^4.4"
+    },
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Base\\Providers\\BaseServiceProvider"
+                "Modules\\Base\\Providers\\BaseServiceProvider",
+                "Modules\\Base\\Providers\\CommandServiceProvider",
+                "Modules\\Base\\Providers\\EventServiceProvider",
+                "Modules\\Base\\Providers\\BreadcrumbsServiceProvider",
+                "Modules\\Base\\Providers\\ComposerServiceProvider",
+                "Modules\\Base\\Providers\\MailConfigServiceProvider",
+                "Modules\\Base\\Providers\\FormServiceProvider"
             ],
             "aliases": {
-
+                "Assets": "Modules\\Base\\Facades\\AssetsFacade",
+                "MetaBox": "Modules\\Base\\Facades\\MetaBoxFacade",
+                "Action": "Modules\\Base\\Facades\\ActionFacade",
+                "Filter": "Modules\\Base\\Facades\\FilterFacade",
+                "EmailHandler": "Modules\\Base\\Facades\\EmailHandlerFacade",
+                "DashboardMenu": "Modules\\Base\\Facades\\DashboardMenuFacade",
+                "MailVariable": "Modules\\Base\\Facades\\MailVariableFacade"
             }
         }
     },

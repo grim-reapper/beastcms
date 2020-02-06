@@ -1,19 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module Base</title>
+@extends('Base::layouts.base')
 
-       {{-- Laravel Mix - CSS File --}}
-       {{-- <link rel="stylesheet" href="{{ mix('css/base.css') }}"> --}}
+@section ('page')
+    @include('Base::layouts.partials.svg-icon')
 
-    </head>
-    <body>
-        @yield('content')
+    <div class="page-wrapper">
 
-        {{-- Laravel Mix - JS File --}}
-        {{-- <script src="{{ mix('js/base.js') }}"></script> --}}
-    </body>
-</html>
+        @include('Base::layouts.partials.top-header')
+        <div class="clearfix"></div>
+        <div class="page-container">
+            <div class="page-sidebar-wrapper">
+                <div class="page-sidebar navbar-collapse collapse">
+                    <div class="sidebar">
+                        <div class="sidebar-content">
+                            <ul class="page-sidebar-menu page-header-fixed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                                @include('Base::layouts.partials.sidebar')
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content-wrapper">
+                <div class="page-content @if (Route::currentRouteName() == 'media.index') rv-media-integrate-wrapper @endif">
+                    {!! Breadcrumbs::render('main', page_title()->getTitle(false)) !!}
+                    <div class="clearfix"></div>
+                    @yield('content')
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        @include('Base::layouts.partials.footer')
+    </div>
+@stop
+
+@section('javascript')
+    @include('Media::partials.media')
+@endsection
+
+@push('footer')
+    @routes
+@endpush

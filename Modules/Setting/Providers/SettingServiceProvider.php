@@ -4,18 +4,19 @@ namespace Modules\Setting\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\Base\Foundation\Helper;
+use Modules\Base\Supports\Helper;
 use Modules\Base\Traits\LoadAndPublishDataTrait;
 use Modules\Setting\Eloquent\SettingRepository;
 use Modules\Setting\Entities\Setting;
 use Modules\Setting\Facades\SettingFacade;
 use Modules\Setting\Repositories\Caches\SettingCacheDecorator;
 use Modules\Setting\Repositories\Interfaces\SettingInterface;
-use Modules\Setting\Support\SettingsManager;
-use Modules\Setting\Support\SettingStore;
+use Modules\Setting\Supports\SettingsManager;
+use Modules\Setting\Supports\SettingStore;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Events\RouteMatched;
+use Event;
 class SettingServiceProvider extends ServiceProvider
 {
     use LoadAndPublishDataTrait;
@@ -34,6 +35,45 @@ class SettingServiceProvider extends ServiceProvider
             ->loadAndPublishConfigurations(['permissions'])
             ->loadMigrations()
             ->publishAssets();
+        Event::listen(RouteMatched::class, function () {
+            dashboard_menu()
+                ->registerItem([
+                   'id'          => 'cms-core-settings',
+                   'priority'    => 998,
+                   'parent_id'   => null,
+                   'name'        => 'core/setting::setting.title',
+                   'icon'        => 'fa fa-cogs',
+                   'url'         => route('settings.options'),
+                   'permissions' => ['settings.options'],
+               ])
+                ->registerItem([
+                   'id'          => 'cms-core-settings-general',
+                   'priority'    => 1,
+                   'parent_id'   => 'cms-core-settings',
+                   'name'        => 'core/base::layouts.setting_general',
+                   'icon'        => null,
+                   'url'         => route('settings.options'),
+                   'permissions' => ['settings.options'],
+               ])
+                ->registerItem([
+                   'id'          => 'cms-core-settings-email',
+                   'priority'    => 2,
+                   'parent_id'   => 'cms-core-settings',
+                   'name'        => 'core/base::layouts.setting_email',
+                   'icon'        => null,
+                   'url'         => route('settings.email'),
+                   'permissions' => ['settings.email'],
+               ])
+                ->registerItem([
+                   'id'          => 'cms-core-settings-media',
+                   'priority'    => 3,
+                   'parent_id'   => 'cms-core-settings',
+                   'name'        => 'core/setting::setting.media.title',
+                   'icon'        => null,
+                   'url'         => route('settings.media'),
+                   'permissions' => ['settings.media'],
+               ]);
+        });
     }
 
     /**

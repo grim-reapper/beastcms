@@ -2,78 +2,319 @@
 
 namespace Modules\Setting\Http\Controllers;
 
+use Assets;
+use Modules\Base\Supports\Core;
+use Modules\Base\Supports\EmailHandler;
+use Modules\Setting\Http\Requests\EmailTemplateRequest;
+use Modules\Setting\Http\Requests\LicenseSettingRequest;
+use Modules\Setting\Http\Requests\MediaSettingRequest;
+use Modules\Setting\Http\Requests\SendTestEmailRequest;
+use Modules\Setting\Entities\Setting;
+use Modules\Setting\Repositories\Interfaces\SettingInterface;
+use Modules\Setting\Supports\SettingStore;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\File;
+use Modules\Base\Http\Controllers\BaseController;
+use Modules\Base\Http\Responses\BaseHttpResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 
-class SettingController extends Controller
+class SettingController extends BaseController
 {
     /**
-     * Display a listing of the resource.
-     * @return Response
+     * @var SettingInterface
      */
-    public function index()
+    protected $settingRepository;
+
+    /**
+     * @var SettingStore
+     */
+    protected $settingStore;
+
+    /**
+     * SettingController constructor.
+     * @param SettingInterface $settingRepository
+     * @param SettingStore $settingStore
+     */
+    public function __construct(SettingInterface $settingRepository, SettingStore $settingStore)
     {
-        return view('setting::index');
+        $this->settingRepository = $settingRepository;
+        $this->settingStore = $settingStore;
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function getOptions()
     {
-        return view('setting::create');
+        page_title()->setTitle(trans('Setting::setting.title'));
+
+        Assets::addScriptsDirectly('vendor/core/js/setting.js');
+
+        return view('Setting::index');
     }
 
     /**
-     * Store a newly created resource in storage.
      * @param Request $request
-     * @return Response
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
      */
-    public function store(Request $request)
+    public function postEdit(Request $request, BaseHttpResponse $response)
     {
-        //
+        $this->saveSettings($request->except(['_token']));
+
+        return $response
+            ->setPreviousUrl(route('settings.options'))
+            ->setMessage(trans('Base::notices.update_success_message'));
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
+     * @param array $data
      */
-    public function show($id)
+    protected function saveSettings(array $data)
     {
-        return view('setting::show');
+        foreach ($data as $settingKey => $settingValue) {
+            $this->settingStore->set($settingKey, $settingValue);
+        }
+
+        $this->settingStore->save();
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function getEmailConfig()
     {
-        return view('setting::edit');
+        page_title()->setTitle(trans('Base::layouts.setting_email'));
+        Assets::addScriptsDirectly('vendor/core/js/setting.js');
+
+        return view('Setting::email');
     }
 
     /**
-     * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
-     * @return Response
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
      */
-    public function update(Request $request, $id)
+    public function postEditEmailConfig(Request $request, BaseHttpResponse $response)
     {
-        //
+        $this->saveSettings($request->except(['_token']));
+
+        return $response
+            ->setPreviousUrl(route('settings.email'))
+            ->setMessage(trans('Base::notices.update_success_message'));
     }
 
     /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
+     * @param $type
+     * @param $name
+     * @param $template
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function destroy($id)
+    public function getEditEmailTemplate($type, $name, $template)
     {
-        //
+        $title = trans(config($type . '.' . $name . '.email.templates.' . $template . '.title', ''));
+        page_title()->setTitle($title);
+
+        Assets::addStylesDirectly([
+                                      'vendor/core/libraries/codemirror/lib/codemirror.css',
+                                      'vendor/core/libraries/codemirror/addon/hint/show-hint.css',
+                                      'vendor/core/css/setting.css',
+                                  ])
+            ->addScriptsDirectly([
+                                     'vendor/core/libraries/codemirror/lib/codemirror.js',
+                                     'vendor/core/libraries/codemirror/lib/css.js',
+                                     'vendor/core/libraries/codemirror/addon/hint/show-hint.js',
+                                     'vendor/core/libraries/codemirror/addon/hint/anyword-hint.js',
+                                     'vendor/core/libraries/codemirror/addon/hint/css-hint.js',
+                                     'vendor/core/js/setting.js',
+                                 ]);
+
+
+        $emailContent = get_setting_email_template_content($type, $name, $template);
+        $emailSubject = get_setting_email_subject($type, $name, $template);
+        $pluginData = [
+            'type'          => $type,
+            'name'          => $name,
+            'template_file' => $template,
+        ];
+
+        return view('Setting::email-template-edit', compact('emailContent', 'emailSubject', 'pluginData'));
+    }
+
+    /**
+     * @param EmailTemplateRequest $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function postStoreEmailTemplate(EmailTemplateRequest $request, BaseHttpResponse $response)
+    {
+        if ($request->has('email_subject_key')) {
+            $this->settingStore
+                ->set($request->input('email_subject_key'), $request->input('email_subject'))
+                ->save();
+        }
+
+        save_file_data($request->input('template_path'), $request->input('email_content'), false);
+
+        return $response->setMessage(trans('Base::notices.update_success_message'));
+    }
+
+    /**
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     * @throws Exception
+     */
+    public function postResetToDefault(Request $request, BaseHttpResponse $response)
+    {
+        $this->settingRepository->deleteBy(['key' => $request->input('email_subject_key')]);
+        File::delete($request->input('template_path'));
+
+        return $response->setMessage(trans('Setting::setting.email.reset_success'));
+    }
+
+    /**
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function postChangeEmailStatus(Request $request, BaseHttpResponse $response)
+    {
+        $this->settingStore
+            ->set($request->input('key'), $request->input('value'))
+            ->save();
+
+        return $response->setMessage(trans('Base::notices.update_success_message'));
+    }
+
+    /**
+     * @param BaseHttpResponse $response
+     * @param SendTestEmailRequest $request
+     * @param EmailHandler $emailHandler
+     * @return BaseHttpResponse
+     * @throws \Throwable
+     */
+    public function postSendTestEmail(
+        BaseHttpResponse $response,
+        SendTestEmailRequest $request,
+        EmailHandler $emailHandler
+    ) {
+        try {
+            $emailHandler->send(
+                file_get_contents(core_path('setting/resources/email-templates/test.tpl')),
+                __('Test title'),
+                $request->input('email'),
+                [],
+                true
+            );
+
+            return $response->setMessage(__('Send email successfully!'));
+        } catch (Exception $exception) {
+            return $response->setError()
+                ->setMessage($exception->getMessage());
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getMediaSetting()
+    {
+        page_title()->setTitle(trans('Setting::setting.media.title'));
+
+        return view('Setting::media');
+    }
+
+    /**
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function postEditMediaSetting(MediaSettingRequest $request, BaseHttpResponse $response)
+    {
+        $this->saveSettings($request->except(['_token']));
+
+        return $response
+            ->setPreviousUrl(route('settings.media'))
+            ->setMessage(trans('Base::notices.update_success_message'));
+    }
+
+    /**
+     * @param Core $coreApi
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function getVerifyLicense(Core $coreApi, BaseHttpResponse $response)
+    {
+        if (!File::exists(storage_path('.license'))) {
+            return $response->setError()->setMessage('Your license is invalid, please contact support.');
+        }
+
+        $result = $coreApi->verifyLicense();
+
+        if (!$result['status']) {
+            return $response->setError()->setMessage($result['message']);
+        }
+
+        $activatedAt = Carbon::createFromTimestamp(filectime($coreApi->getLicenseFilePath()));
+
+        $data = [
+            'activated_at' => $activatedAt->format('M d Y'),
+            'licensed_to'  => setting('licensed_to'),
+        ];
+
+        return $response->setMessage($result['message'])->setData($data);
+    }
+
+    /**
+     * @param LicenseSettingRequest $request
+     * @param BaseHttpResponse $response
+     * @param Core $coreApi
+     * @return BaseHttpResponse
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function activateLicense(LicenseSettingRequest $request, BaseHttpResponse $response, Core $coreApi)
+    {
+        $result = $coreApi->activateLicense($request->input('purchase_code'), $request->input('buyer'));
+
+        if (!$result['status']) {
+            return $response->setError()->setMessage($result['message']);
+        }
+
+        setting()
+            ->set(['licensed_to' => $request->input('buyer')])
+            ->save();
+
+        $activatedAt = Carbon::createFromTimestamp(filectime($coreApi->getLicenseFilePath()));
+
+        $data = [
+            'activated_at' => $activatedAt->format('M d Y'),
+            'licensed_to'  => $request->input('buyer'),
+        ];
+
+        return $response->setMessage($result['message'])->setData($data);
+    }
+
+    /**
+     * @param BaseHttpResponse $response
+     * @param Core $coreApi
+     * @return BaseHttpResponse
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function deactivateLicense(BaseHttpResponse $response, Core $coreApi)
+    {
+        $result = $coreApi->deactivateLicense();
+
+        if (!$result['status']) {
+            return $response->setError()->setMessage($result['message']);
+        }
+
+        Setting::where('key', 'licensed_to')->delete();
+
+        return $response->setMessage($result['message']);
     }
 }

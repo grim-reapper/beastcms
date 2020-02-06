@@ -1,55 +1,80 @@
 <?php
 
-
 namespace Modules\Base\Traits;
+
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
+/**
+ * @mixin ServiceProvider
+ */
 trait LoadAndPublishDataTrait
 {
+    /**
+     * @var string
+     */
     protected $namespace = null;
+
+    /**
+     * @var string
+     */
     protected $basePath = null;
 
+    /**
+     * @param $namespace
+     * @return $this
+     */
     public function setNamespace($namespace): self
     {
-        $this->namespace = $namespace;
+        $this->namespace = ltrim(rtrim($namespace, '/'), '/');
         return $this;
     }
 
+    /**
+     * @param $path
+     * @return $this
+     */
     public function setBasePath($path): self
     {
         $this->basePath = $path;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getBasePath(): string
     {
         return $this->basePath ?? platform_path();
     }
 
+    /**
+     * Publish the given configuration file name (without extension) and the given module
+     * @param $fileNames
+     * @return $this
+     */
     public function loadAndPublishConfigurations($fileNames): self
     {
         if (!is_array($fileNames)) {
             $fileNames = [$fileNames];
         }
         foreach ($fileNames as $fileName) {
-            $this->mergeConfigFrom(
-                $this->getConfigFilePath($fileName),
-                $this->getDotedNamespace() . '.' . $fileName
-            );
+            $this->mergeConfigFrom($this->getConfigFilePath($fileName), $this->getDotedNamespace() . '.' . $fileName);
             if ($this->app->runningInConsole()) {
-                $this->publishes(
-                    [
-                        $this->getConfigFilePath($fileName) => config_path(
-                            $this->getDashedNamespace() . '/' . $fileName . '.php'
-                        ),
-                    ],
-                    'cms-config'
-                );
+                $this->publishes([
+                    $this->getConfigFilePath($fileName) => config_path($this->getDashedNamespace() . '/' . $fileName . '.php'),
+                ], 'cms-config');
             }
         }
+
         return $this;
     }
 
+    /**
+     * Publish the given configuration file name (without extension) and the given module
+     * @param $fileNames
+     * @return $this
+     */
     public function loadRoutes($fileNames = ['web']): self
     {
         if (!is_array($fileNames)) {
@@ -58,42 +83,52 @@ trait LoadAndPublishDataTrait
         foreach ($fileNames as $fileName) {
             $this->loadRoutesFrom($this->getRouteFilePath($fileName));
         }
+
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function loadAndPublishViews(): self
     {
         $this->loadViewsFrom($this->getViewsPath(), $this->getDashedNamespace());
-        if ($this->app->runninInConsole()) {
-            $this->publishes(
-                [
-                    $this->getViewsPath() => resource_path(
-                        'views/vendor/' . $this->getDashedNamespace()
-                    ),
-                ],
-                'cms-views'
-            );
+        if ($this->app->runningInConsole()) {
+            $this->publishes([$this->getViewsPath() => resource_path('views/vendor/' . $this->getDashedNamespace())],
+                'cms-views');
         }
+
         return $this;
     }
 
-    protected function loadAndPublishTranslations(): self
+    /**
+     * @return $this
+     */
+    public function loadAndPublishTranslations(): self
     {
         $this->loadTranslationsFrom($this->getTranslationsPath(), $this->getDashedNamespace());
         if ($this->app->runningInConsole()) {
             $this->publishes([$this->getTranslationsPath() => resource_path('lang/vendor/' . $this->getDashedNamespace())],
-                             'cms-lang');
+                'cms-lang');
         }
 
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function loadMigrations(): self
     {
         $this->loadMigrationsFrom($this->getMigrationsPath());
         return $this;
     }
 
+    /**
+     * @param null $path
+     * @return $this
+     * @deprecated
+     */
     public function publishPublicFolder($path = null): self
     {
         return $this->publishAssets($path);
@@ -118,7 +153,7 @@ trait LoadAndPublishDataTrait
         if ($this->app->runningInConsole()) {
             if (empty($path)) {
                 $path = !Str::contains($this->getDotedNamespace(),
-                                       'core.') ? 'vendor/core/' . $this->getDashedNamespace() : 'vendor/core';
+                    'core.') ? 'vendor/core/' . $this->getDashedNamespace() : 'vendor/core';
             }
             $this->publishes([$this->getAssetsPath() => public_path($path)], 'cms-public');
         }
@@ -127,44 +162,69 @@ trait LoadAndPublishDataTrait
     }
 
     /**
+     * Get path of the give file name in the given module
+     * @param string $file
      * @return string
      */
-    protected function getAssetsPath(): string
+    protected function getConfigFilePath($file): string
     {
-        return $this->getBasePath() . $this->getDashedNamespace() . '/Public/';
+        return $this->getBasePath() . $this->getDashedNamespace() . '/config/' . $file . '.php';
     }
 
-    protected function getMigrationsPath(): string
-    {
-        return $this->getBasePath() . $this->getDashedNamespace() . '/database/migrations/';
-    }
-
-    protected function getTranslationsPath(): string
-    {
-        return $this->getBasePath() . $this->getDashedNamespace() . '/resources/lang/';
-    }
-
-    protected function getViewsPath(): string
-    {
-        return $this->getBasePath() . $this->getDashedNamespace() . '/resources/views/';
-    }
+    /**
+     * @param $file
+     * @return string
+     */
     protected function getRouteFilePath($file): string
     {
         return $this->getBasePath() . $this->getDashedNamespace() . '/routes/' . $file . '.php';
     }
 
-    protected function getConfigFilePath($file): string
+    /**
+     * @return string
+     */
+    protected function getViewsPath(): string
     {
-        return $this->getBasePath() . '/'. $this->getDashedNamespace() . '/config/' . $file . '.php';
+        return $this->getBasePath() . $this->getDashedNamespace() . '/resources/views/';
     }
 
-    protected function getDashedNamespace(): string
+    /**
+     * @return string
+     */
+    protected function getTranslationsPath(): string
     {
-        return str_replace('.', '/', $this->namespace);
+        return $this->getBasePath() . $this->getDashedNamespace() . '/resources/lang/';
     }
 
+    /**
+     * @return string
+     */
+    protected function getMigrationsPath(): string
+    {
+        return $this->getBasePath() . $this->getDashedNamespace() . '/database/migrations/';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getAssetsPath(): string
+    {
+        return $this->getBasePath() . $this->getDashedNamespace() . '/public/';
+    }
+
+    /**
+     * @return string
+     */
     protected function getDotedNamespace(): string
     {
         return str_replace('/', '.', $this->namespace);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDashedNamespace(): string
+    {
+        return str_replace('.', '/', $this->namespace);
     }
 }

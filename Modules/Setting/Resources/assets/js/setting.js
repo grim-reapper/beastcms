@@ -24,13 +24,13 @@ class SettingManagement {
                 },
                 success: (res) => {
                     if (!res.error) {
-                        Botble.showSuccess(res.message);
+                        Modules.showSuccess(res.message);
                     } else {
-                        Botble.showError(res.message);
+                        Modules.showError(res.message);
                     }
                 },
                 error: (res) => {
-                    Botble.handleError(res);
+                    Modules.handleError(res);
                 }
             });
         });
@@ -65,15 +65,15 @@ class SettingManagement {
                 },
                 success: (res) => {
                     if (!res.error) {
-                        Botble.showSuccess(res.message);
+                        Modules.showSuccess(res.message);
                     } else {
-                        Botble.showError(res.message);
+                        Modules.showError(res.message);
                     }
                     _self.removeClass('button-loading');
                     _self.closest('.modal').modal('hide');
                 },
                 error: (res) => {
-                    Botble.handleError(res);
+                    Modules.handleError(res);
                     _self.removeClass('button-loading');
                     _self.closest('.modal').modal('hide');
                 }
@@ -81,7 +81,7 @@ class SettingManagement {
         });
 
         if (typeof CodeMirror !== 'undefined') {
-            Botble.initCodeEditor('mail-template-editor');
+            Modules.initCodeEditor('mail-template-editor');
         }
 
         $(document).on('click', '.btn-trigger-reset-to-default', (event) => {
@@ -106,18 +106,18 @@ class SettingManagement {
                 },
                 success: (res) => {
                     if (!res.error) {
-                        Botble.showSuccess(res.message);
+                        Modules.showSuccess(res.message);
                         setTimeout(() => {
                             window.location.reload();
                         }, 1000);
                     } else {
-                        Botble.showError(res.message);
+                        Modules.showError(res.message);
                     }
                     _self.removeClass('button-loading');
                     $('#reset-template-to-default-modal').modal('hide');
                 },
                 error: (res) => {
-                    Botble.handleError(res);
+                    Modules.handleError(res);
                     _self.removeClass('button-loading');
                 }
             });

@@ -9,7 +9,7 @@ if (!function_exists('setting')) {
      *
      * @param $key
      * @param $default
-     * @return array|\Botble\Setting\Supports\SettingStore|string|null
+     * @return array|\Modules\Setting\Supports\SettingStore|string|null
      */
     function setting($key = null, $default = null)
     {
@@ -79,7 +79,7 @@ if (!function_exists('get_setting_email_subject')) {
      * @param $type : plugins or core
      * @param $name : name of plugin or core component
      * @param $mail_key : define in config/email/templates
-     * @return array|\Botble\Setting\Supports\SettingStore|null|string
+     * @return array|\Modules\Setting\Supports\SettingStore|null|string
      */
     function get_setting_email_subject($type, $module, $templateKey)
     {
@@ -110,7 +110,7 @@ if (!function_exists('get_setting_email_status')) {
      * @param $type
      * @param $module
      * @param $templateKey
-     * @return array|\Botble\Setting\Supports\SettingStore|null|string
+     * @return array|\Modules\Setting\Supports\SettingStore|null|string
      */
     function get_setting_email_status($type, $module, $templateKey)
     {

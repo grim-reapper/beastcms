@@ -1,13 +1,11 @@
 <?php
-if (!function_exists('platform_path')) {
-    /**
-     * @return string
-     */
-    function platform_path($path = null): string
-    {
-        return base_path('Modules', $path);
-    }
-}
+
+use Modules\Base\Facades\DashboardMenuFacade;
+use Modules\Base\Facades\PageTitleFacade;
+use Modules\Base\Supports\Editor;
+use Modules\Base\Supports\PageTitle;
+use Illuminate\Support\Facades\DB;
+
 if (!function_exists('table_actions')) {
     /**
      * @param $edit
@@ -89,7 +87,7 @@ if (!function_exists('is_in_admin')) {
      */
     function is_in_admin(): bool
     {
-        $isInAdmin = request()->segment(1) === config('Base.config.admin_dir');
+        $isInAdmin = request()->segment(1) === config('Base.general.admin_dir');
 
         return apply_filters(IS_IN_ADMIN_FILTER, $isInAdmin);
     }
@@ -107,7 +105,7 @@ if (!function_exists('page_title')) {
 
 if (!function_exists('dashboard_menu')) {
     /**
-     * @return \Botble\Base\Supports\DashboardMenu
+     * @return \Modules\Base\Supports\DashboardMenu
      */
     function dashboard_menu()
     {
@@ -172,8 +170,18 @@ if (!function_exists('get_cms_version')) {
         try {
             return trim(get_file_data(core_path('/VERSION'), false));
         } catch (Exception $exception) {
-            return '1.0';
+            return '3.7';
         }
+    }
+}
+
+if (!function_exists('platform_path')) {
+    /**
+     * @return string
+     */
+    function platform_path($path = null): string
+    {
+        return base_path('Modules/' . $path);
     }
 }
 
@@ -183,7 +191,7 @@ if (!function_exists('core_path')) {
      */
     function core_path($path = null): string
     {
-        return platform_path('Base/' . $path);
+        return platform_path('base/' . $path);
     }
 }
 
@@ -196,4 +204,3 @@ if (!function_exists('package_path')) {
         return platform_path('packages/' . $path);
     }
 }
-

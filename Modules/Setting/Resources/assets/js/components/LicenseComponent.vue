@@ -100,7 +100,7 @@
                         this.isLoading = false;
                     })
                     .catch((res) => {
-                        Botble.handleError(res.response.data);
+                        Modules.handleError(res.response.data);
                         this.isLoading = false;
                     });
             },
@@ -110,7 +110,7 @@
                 axios.post(this.activateLicenseUrl, {purchase_code: this.purchaseCode, buyer: this.buyer})
                     .then((res) => {
                         if (res.data.error) {
-                            Botble.showError(res.data.message);
+                            Modules.showError(res.data.message);
                         } else {
                             this.verified = true;
                             this.license = res.data.data;
@@ -118,7 +118,7 @@
                         this.activating = false;
                     })
                     .catch((res) => {
-                        Botble.handleError(res.response.data);
+                        Modules.handleError(res.response.data);
                         this.activating = false;
                     });
             },
@@ -127,14 +127,14 @@
                 axios.post(this.deactivateLicenseUrl)
                     .then((res) => {
                         if (res.data.error) {
-                            Botble.showError(res.data.message);
+                            Modules.showError(res.data.message);
                         } else {
                             this.verified = false;
                         }
                         this.deactivating = false;
                     })
                     .catch((res) => {
-                        Botble.handleError(res.response.data);
+                        Modules.handleError(res.response.data);
                         this.deactivating = false;
                     });
             },

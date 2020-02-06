@@ -7,7 +7,15 @@
     "providers": [
         "Modules\\Base\\Providers\\BaseServiceProvider"
     ],
-    "aliases": {},
+    "aliases": {
+        "Assets": "Modules\\Base\\Facades\\AssetsFacade",
+        "MetaBox": "Modules\\Base\\Facades\\MetaBoxFacade",
+        "Action": "Modules\\Base\\Facades\\ActionFacade",
+        "Filter": "Modules\\Base\\Facades\\FilterFacade",
+        "EmailHandler": "Modules\\Base\\Facades\\EmailHandlerFacade",
+        "DashboardMenu": "Modules\\Base\\Facades\\DashboardMenuFacade",
+        "MailVariable": "Modules\\Base\\Facades\\MailVariableFacade"
+    },
     "files": [],
     "requires": []
 }
