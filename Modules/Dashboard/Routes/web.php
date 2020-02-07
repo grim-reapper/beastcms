@@ -11,11 +11,11 @@
 |
 */
 
-Route::prefix('dashboard')->group(function() {
-    Route::get('/', 'DashboardController@index');
-});
+//Route::prefix('dashboard')->group(function() {
+//    Route::get('/', 'DashboardController@index');
+//});
 Route::group(['namespace' => 'Modules\Dashboard\Http\Controllers', 'middleware' => 'web'], function () {
-    Route::group(['prefix' => config('Base.config.admin_dir'), 'middleware' => 'auth'], function () {
+    Route::group(['prefix' => config('Base.general.admin_dir'), 'middleware' => 'auth'], function () {
         Route::get('', [
             'as'         => 'dashboard.index',
             'uses'       => 'DashboardController@getDashboard',

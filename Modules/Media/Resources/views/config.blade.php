@@ -4,8 +4,8 @@
         'permissions' => RvMedia::getPermissions(),
         'translations' => trans('Media::media.javascript'),
         'pagination' => [
-            'paged' => config('core.media.media.pagination.paged'),
-            'posts_per_page' => config('core.media.media.pagination.per_page'),
+            'paged' => config('Media.media.pagination.paged'),
+            'posts_per_page' => config('Media.media.pagination.per_page'),
             'in_process_get_media' => false,
             'has_more' =>  true,
         ],
