@@ -1,0 +1,15 @@
+{
+    "name": "Seo",
+    "alias": "seo",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Seo\\Providers\\SeoServiceProvider"
+    ],
+    "aliases": {
+        "SeoHelper": "Modules\\Seo\\Facades\\SeoHelperFacade"
+    },
+    "files": [],
+    "requires": []
+}

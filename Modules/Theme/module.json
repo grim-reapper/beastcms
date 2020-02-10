@@ -1,0 +1,20 @@
+{
+    "name": "Theme",
+    "alias": "theme",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Theme\\Providers\\ThemeServiceProvider",
+        "Modules\\Theme\\Providers\\RouteServiceProvider"
+    ],
+    "aliases": {
+        "Theme": "Modules\\Theme\\Facades\\ThemeFacade",
+        "ThemeOption": "Modules\\Theme\\Facades\\ThemeOptionFacade",
+        "ThemeManager": "Modules\\Theme\\Facades\\ManagerFacade",
+        "AdminBar": "Modules\\Theme\\Facades\\AdminBarFacade",
+        "SiteMapManager": "Modules\\Theme\\Facades\\SiteMapManagerFacade"
+    },
+    "files": [],
+    "requires": []
+}

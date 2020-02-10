@@ -80,7 +80,7 @@ class MediaFile extends BaseModel
             return 'video';
         }
 
-        foreach (config('core.media.media.mime_types', []) as $key => $value) {
+        foreach (config('Media.media.mime_types', []) as $key => $value) {
             if (in_array($this->attributes['mime_type'], $value)) {
                 $type = $key;
                 break;

@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/theme",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Theme\\Providers\\ThemeServiceProvider",
+                "Modules\\Theme\\Providers\\RouteServiceProvider"
+            ],
+            "aliases": {
+                "Theme": "Modules\\Theme\\Facades\\ThemeFacade",
+                "ThemeOption": "Modules\\Theme\\Facades\\ThemeOptionFacade",
+                "ThemeManager": "Modules\\Theme\\Facades\\ManagerFacade",
+                "AdminBar": "Modules\\Theme\\Facades\\AdminBarFacade",
+                "SiteMapManager": "Modules\\Theme\\Facades\\SiteMapManagerFacade"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Theme\\": ""
+        }
+    }
+}

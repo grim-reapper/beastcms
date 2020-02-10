@@ -1,0 +1,16 @@
+{
+    "name": "Widget",
+    "alias": "widget",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Widget\\Providers\\WidgetServiceProvider"
+    ],
+    "aliases": {
+        "Widget": "Modules\\Widget\\Facades\\WidgetFacade",
+        "WidgetGroup": "Modules\\Widget\\Facades\\WidgetGroupFacade"
+    },
+    "files": [],
+    "requires": []
+}

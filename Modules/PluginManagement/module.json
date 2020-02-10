@@ -1,0 +1,13 @@
+{
+    "name": "PluginManagement",
+    "alias": "pluginmanagement",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\PluginManagement\\Providers\\PluginManagementServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

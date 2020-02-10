@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/pluginmanagement",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\PluginManagement\\Providers\\PluginManagementServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\PluginManagement\\": ""
+        }
+    }
+}

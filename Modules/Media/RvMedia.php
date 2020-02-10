@@ -62,7 +62,7 @@ class RvMedia
         $this->uploadManager = $uploadManager;
         $this->thumbnailService = $thumbnailService;
 
-        $this->permissions = config('core.media.media.permissions', []);
+        $this->permissions = config('Media.media.permissions', []);
     }
 
     /**
@@ -166,7 +166,7 @@ class RvMedia
      */
     public function getSizes(): array
     {
-        return config('core.media.media.sizes', []);
+        return config('Media.media.sizes', []);
     }
 
     /**
@@ -189,12 +189,11 @@ class RvMedia
          */
         try {
             $file = $this->fileRepository->getModel();
-
-            if ($fileUpload->getSize() / 1024 > (int)config('core.media.media.max_file_size_upload')) {
+            if ($fileUpload->getSize() / 1024 > (int)config('Media.media.max_file_size_upload')) {
                 return [
                     'error'   => true,
                     'message' => trans('Media::media.file_too_big',
-                        ['size' => config('core.media.media.max_file_size_upload')]),
+                        ['size' => config('Media.media.max_file_size_upload')]),
                 ];
             }
 
@@ -236,7 +235,7 @@ class RvMedia
             $this->fileRepository->createOrUpdate($file);
 
             if ($file->canGenerateThumbnails()) {
-                foreach (config('core.media.media.sizes', []) as $size) {
+                foreach (config('Media.media.sizes', []) as $size) {
                     $readableSize = explode('x', $size);
                     $this->thumbnailService
                         ->setImage($fileUpload->getRealPath())
@@ -246,13 +245,13 @@ class RvMedia
                         ->save();
                 }
 
-                if (config('core.media.media.watermark.source')) {
+                if (config('Media.media.watermark.source')) {
                     $image = Image::make(public_path($file->url));
                     $image->insert(
-                        config('core.media.media.watermark.source'),
-                        config('core.media.media.watermark.position', 'bottom-right'),
-                        config('core.media.media.watermark.x', 10),
-                        config('core.media.media.watermark.y', 10)
+                        config('Media.media.watermark.source'),
+                        config('Media.media.watermark.position', 'bottom-right'),
+                        config('Media.media.watermark.x', 10),
+                        config('Media.media.watermark.y', 10)
                     );
                     $image->save(public_path($file->url));
                 }
@@ -381,7 +380,7 @@ class RvMedia
      */
     public function getSize(string $name): ?string
     {
-        return config('core.media.media.sizes.' . $name);
+        return config('Media.media.sizes.' . $name);
     }
 
     /**
@@ -392,7 +391,7 @@ class RvMedia
      */
     public function addSize(string $name, int $width, int $height)
     {
-        config(['core.media.media.sizes.' . $name => $width . 'x' . $height]);
+        config(['Media.media.sizes.' . $name => $width . 'x' . $height]);
 
         return $this;
     }

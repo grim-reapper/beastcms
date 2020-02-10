@@ -33,7 +33,7 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
      */
     public function getQuota()
     {
-        return config('core.media.media.max_quota');
+        return config('Media.media.max_quota');
     }
 
     /**
@@ -264,7 +264,7 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                  * @var Eloquent $query
                  */
                 $allMimes = [];
-                foreach (config('core.media.media.mime_types') as $key => $value) {
+                foreach (config('Media.media.mime_types') as $key => $value) {
                     if ($key == $params['filter']) {
                         return $query->whereIn('media_files.mime_type', $value);
                     }
