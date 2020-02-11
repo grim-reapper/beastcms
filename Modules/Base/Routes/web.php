@@ -11,9 +11,6 @@
 |
 */
 
-Route::prefix('base')->group(function() {
-    Route::get('/', 'BaseController@index');
-});
 Route::group(['namespace' => 'Modules\Base\Http\Controllers', 'middleware' => 'web'], function () {
     Route::group(['prefix' => config('Base.config.admin_dir'), 'middleware' => 'auth'], function () {
         Route::group(['prefix' => 'system/info'], function () {

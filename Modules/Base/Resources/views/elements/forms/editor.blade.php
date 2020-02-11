@@ -9,7 +9,7 @@
                data-result="{{ $result }}"
                data-multiple="true"
                data-action="media-insert-{{ setting('rich_editor', config('Base::general.editor.primary')) }}">
-                <i class="far fa-image"></i> {{ trans('core/media::media.add') }}
+                <i class="far fa-image"></i> {{ trans('Media::media.add') }}
             </a>
         </span>
         @if (isset($attributes['with-short-code']) && $attributes['with-short-code'] == true && function_exists('shortcode'))

@@ -3,7 +3,7 @@
 return [
     // List supported modules or plugins
     'supported' => [
-        'Modules\Blog\Models\Post',
-        'Modules\Page\Models\Page',
+        'Modules\Blog\Entities\Post',
+        'Modules\Page\Entities\Page',
     ],
 ];

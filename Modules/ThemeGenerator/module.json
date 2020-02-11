@@ -1,0 +1,13 @@
+{
+    "name": "ThemeGenerator",
+    "alias": "themegenerator",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\ThemeGenerator\\Providers\\ThemeGeneratorServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -67,7 +67,7 @@ class DashboardServiceProvider extends ServiceProvider
             );
         });
 
-        Helper::autoload(__DIR__ . '/../helpers');
+        Helper::autoload(__DIR__ . '/../Helpers');
     }
     /**
      * Get the services provided by the provider.

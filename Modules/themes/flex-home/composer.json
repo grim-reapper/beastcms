@@ -1,0 +1,19 @@
+{
+  "name": "Modules/flex-home",
+  "type": "Modules-theme",
+  "description": "Example theme for Modules CMS",
+  "homepage": "http://Modules.com",
+  "authors": [
+    {
+      "name": "Modules",
+      "homepage": "http://Modules.com"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Theme\\FlexHome\\": "src/"
+    }
+  }
+}

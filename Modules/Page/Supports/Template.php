@@ -19,7 +19,7 @@ class Template
         }
 
         config([
-            'packages.page.general.templates' => array_merge(config('packages.page.general.templates'),
+            'Page.general.templates' => array_merge(config('Page.general.templates'),
                 $validTemplates),
         ]);
     }
@@ -30,7 +30,7 @@ class Template
      */
     protected static function getExistsTemplate()
     {
-        $files = scan_folder(theme_path(setting('theme') . DIRECTORY_SEPARATOR . config('packages.theme.general.containerDir.layout')));
+        $files = scan_folder(theme_path(setting('theme') . DIRECTORY_SEPARATOR . config('Theme.general.containerDir.layout')));
         foreach ($files as $key => $file) {
             $files[$key] = str_replace('.blade.php', '', $file);
         }
@@ -44,6 +44,6 @@ class Template
      */
     public static function getPageTemplates()
     {
-        return config('packages.page.general.templates', []);
+        return config('Page.general.templates', []);
     }
 }

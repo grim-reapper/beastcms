@@ -2,7 +2,7 @@
 
 namespace Modules\Page\Tables;
 
-use Modules\Page\Models\Page;
+use Modules\Page\Entities\Page;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -127,26 +127,26 @@ class PageTable extends TableAbstract
         return [
             'id'         => [
                 'name'  => 'pages.id',
-                'title' => trans('core/base::tables.id'),
+                'title' => trans('Base::tables.id'),
                 'width' => '20px',
             ],
             'name'       => [
                 'name'  => 'pages.name',
-                'title' => trans('core/base::tables.name'),
+                'title' => trans('Base::tables.name'),
                 'class' => 'text-left',
             ],
             'template'   => [
                 'name'  => 'pages.template',
-                'title' => trans('core/base::tables.template'),
+                'title' => trans('Base::tables.template'),
             ],
             'created_at' => [
                 'name'  => 'pages.created_at',
-                'title' => trans('core/base::tables.created_at'),
+                'title' => trans('Base::tables.created_at'),
                 'width' => '100px',
             ],
             'status'     => [
                 'name'  => 'pages.status',
-                'title' => trans('core/base::tables.status'),
+                'title' => trans('Base::tables.status'),
                 'width' => '100px',
             ],
         ];
@@ -180,24 +180,24 @@ class PageTable extends TableAbstract
     {
         return [
             'pages.name'       => [
-                'title'    => trans('core/base::tables.name'),
+                'title'    => trans('Base::tables.name'),
                 'type'     => 'text',
                 'validate' => 'required|max:120',
             ],
             'pages.status'     => [
-                'title'    => trans('core/base::tables.status'),
+                'title'    => trans('Base::tables.status'),
                 'type'     => 'select',
                 'choices'  => BaseStatusEnum::labels(),
                 'validate' => 'required|' . Rule::in(BaseStatusEnum::values()),
             ],
             'pages.template'   => [
-                'title'    => trans('core/base::tables.template'),
+                'title'    => trans('Base::tables.template'),
                 'type'     => 'select',
                 'choices'  => get_page_templates(),
                 'validate' => 'required',
             ],
             'pages.created_at' => [
-                'title' => trans('core/base::tables.created_at'),
+                'title' => trans('Base::tables.created_at'),
                 'type'  => 'date',
             ],
         ];

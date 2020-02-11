@@ -1,6 +1,5 @@
 <?php
 
-use Modules\Setting\Entities\Setting;
 use Modules\Setting\Facades\SettingFacade;
 
 if (!function_exists('setting')) {

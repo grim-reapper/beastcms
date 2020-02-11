@@ -75,7 +75,7 @@ return [
     ],
 
     'supported' => [
-        'Modules\Page\Models\Page',
+        'Modules\Page\Entities\Page',
     ],
 
 ];

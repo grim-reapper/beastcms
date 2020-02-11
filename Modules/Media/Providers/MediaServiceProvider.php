@@ -33,7 +33,7 @@ class MediaServiceProvider extends ServiceProvider
 
     public function register()
     {
-        Helper::autoload(__DIR__ . '/../helpers');
+        Helper::autoload(__DIR__ . '/../Helpers');
 
         $this->app->bind(MediaFileInterface::class, function () {
             return new MediaFileCacheDecorator(

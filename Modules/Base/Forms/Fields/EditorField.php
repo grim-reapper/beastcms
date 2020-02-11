@@ -26,7 +26,7 @@ class EditorField extends FormField
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
     {
         $options['class'] = Arr::get($options, 'class', '') . 'form-control editor-' .
-            setting('rich_editor', config('Base::general.editor.primary'));
+            setting('rich_editor', config('Base.general.editor.primary'));
 
         $options['id'] = Arr::has($options, 'id') ? $options['id'] : $this->getName();
         $options['with-short-code'] = Arr::get($options, 'with-short-code', false);

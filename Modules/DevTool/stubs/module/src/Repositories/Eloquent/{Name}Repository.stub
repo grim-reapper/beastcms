@@ -1,0 +1,10 @@
+<?php
+
+namespace Modules\{Module}\Repositories\Eloquent;
+
+use Modules\Support\Repositories\Eloquent\RepositoriesAbstract;
+use Modules\{Module}\Repositories\Interfaces\{Name}Interface;
+
+class {Name}Repository extends RepositoriesAbstract implements {Name}Interface
+{
+}

@@ -16,8 +16,8 @@ class Editor
     public function registerAssets()
     {
         Assets::addScriptsDirectly(
-            config('Base::general.editor.' .
-                setting('rich_editor', config('Base::general.editor.primary')) . '.js')
+            config('Base.general.editor.' .
+                setting('rich_editor', config('Base.general.editor.primary')) . '.js')
         )
             ->addScriptsDirectly('vendor/core/js/editor.js');
     }
@@ -34,7 +34,7 @@ class Editor
     {
         $attributes['class'] = Arr::get($attributes, 'class', '') .
             ' editor-' .
-            setting('rich_editor', config('Base::general.editor.primary'));
+            setting('rich_editor', config('Base.general.editor.primary'));
 
         $attributes['id'] = Arr::has($attributes, 'id') ? $attributes['id'] : $name;
         $attributes['with-short-code'] = $withShortCode;

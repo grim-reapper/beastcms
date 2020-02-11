@@ -45,7 +45,7 @@ trait LoadAndPublishDataTrait
      */
     public function getBasePath(): string
     {
-        return $this->basePath ?? platform_path();
+        return $this->basePath ?? base_path('Modules/');
     }
 
     /**

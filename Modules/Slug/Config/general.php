@@ -3,7 +3,7 @@
 return [
     'pattern'   => '--slug--',
     'supported' => [
-        'Modules\Page\Models\Page',
+        'Modules\Page\Entities\Page',
     ],
     'prefixes'  => [
 

@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/themegenerator",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\ThemeGenerator\\Providers\\ThemeGeneratorServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ThemeGenerator\\": ""
+        }
+    }
+}

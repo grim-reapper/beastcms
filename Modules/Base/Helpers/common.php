@@ -177,6 +177,8 @@ if (!function_exists('get_cms_version')) {
 
 if (!function_exists('platform_path')) {
     /**
+     * @param  null  $path
+     *
      * @return string
      */
     function platform_path($path = null): string
@@ -201,6 +203,6 @@ if (!function_exists('package_path')) {
      */
     function package_path($path = null): string
     {
-        return platform_path('packages/' . $path);
+        return platform_path($path);
     }
 }

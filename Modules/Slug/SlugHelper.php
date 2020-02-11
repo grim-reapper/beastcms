@@ -55,7 +55,9 @@ class SlugHelper
     }
 
     /**
-     * @return array
+     * @param  string  $model
+     *
+     * @return bool
      */
     public function isSupportedModel(string $model): bool
     {

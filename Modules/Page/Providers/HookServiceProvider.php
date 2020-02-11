@@ -5,7 +5,7 @@ namespace Modules\Page\Providers;
 use Auth;
 use Modules\Base\Enums\BaseStatusEnum;
 use Modules\Dashboard\Supports\DashboardWidgetInstance;
-use Modules\Page\Models\Page;
+use Modules\Page\Entities\Page;
 use Modules\Page\Repositories\Interfaces\PageInterface;
 use Modules\SeoHelper\SeoOpenGraph;
 use Eloquent;

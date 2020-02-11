@@ -12,10 +12,6 @@
 */
 
 use Modules\Table\Http\Controllers\TableController;
-
-Route::prefix('table')->group(function() {
-    Route::get('/', 'TableController@index');
-});
 Route::group([
          'middleware' => ['web', 'auth'],
          'prefix'     => 'tables',

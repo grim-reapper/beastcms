@@ -1,0 +1,13 @@
+{
+    "name": "DevTool",
+    "alias": "devtool",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\DevTool\\Providers\\DevToolServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -27,7 +27,7 @@
     @if ($form->isUseInlineJs())
         {!! Assets::scriptToHtml('form-validation') !!}
         {!! $form->renderValidatorJs() !!}
-        @include('core/media::partials.media')
+        @include('Media::partials.media')
         <script>
             "use strict";
             Modules.initMediaIntegrate();

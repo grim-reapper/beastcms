@@ -38,7 +38,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $ex)
     {
         if ($ex instanceof PostTooLargeException) {
-            return RvMedia::responseError(trans('core/media::media.upload_failed', [
+            return RvMedia::responseError(trans('Media::media.upload_failed', [
                 'size' => human_file_size(RvMedia::getServerConfigMaxUploadFileSize()),
             ]));
         }

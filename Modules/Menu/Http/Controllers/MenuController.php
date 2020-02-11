@@ -76,7 +76,7 @@ class MenuController extends BaseController
      */
     public function index(MenuTable $dataTable)
     {
-        page_title()->setTitle(trans('core/base::layouts.menu'));
+        page_title()->setTitle(trans('Base::layouts.menu'));
 
         return $dataTable->renderTable();
     }
@@ -86,7 +86,7 @@ class MenuController extends BaseController
      */
     public function create(FormBuilder $formBuilder)
     {
-        page_title()->setTitle(trans('packages/menu::menu.create'));
+        page_title()->setTitle(trans('Menu::menu.create'));
 
         return $formBuilder->create(MenuForm::class)->renderForm();
     }
@@ -114,7 +114,7 @@ class MenuController extends BaseController
         return $response
             ->setPreviousUrl(route('menus.index'))
             ->setNextUrl(route('menus.edit', $menu->id))
-            ->setMessage(trans('core/base::notices.create_success_message'));
+            ->setMessage(trans('Base::notices.create_success_message'));
     }
 
     /**
@@ -153,7 +153,7 @@ class MenuController extends BaseController
      */
     public function edit($id, Request $request, FormBuilder $formBuilder)
     {
-        page_title()->setTitle(trans('packages/menu::menu.edit'));
+        page_title()->setTitle(trans('Menu::menu.edit'));
 
         Assets::addScripts(['jquery-nestable'])
             ->addStyles(['jquery-nestable'])
@@ -202,7 +202,7 @@ class MenuController extends BaseController
 
         return $response
             ->setPreviousUrl(route('menus.index'))
-            ->setMessage(trans('core/base::notices.create_success_message'));
+            ->setMessage(trans('Base::notices.create_success_message'));
     }
 
     /**
@@ -220,7 +220,7 @@ class MenuController extends BaseController
 
             event(new DeletedContentEvent(MENU_MODULE_SCREEN_NAME, $request, $menu));
 
-            return $response->setMessage(trans('core/base::notices.delete_success_message'));
+            return $response->setMessage(trans('Base::notices.delete_success_message'));
         } catch (Exception $ex) {
             return $response
                 ->setError()
@@ -240,7 +240,7 @@ class MenuController extends BaseController
         if (empty($ids)) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.no_select'));
+                ->setMessage(trans('Base::notices.no_select'));
         }
 
         foreach ($ids as $id) {
@@ -250,6 +250,6 @@ class MenuController extends BaseController
             event(new DeletedContentEvent(MENU_MODULE_SCREEN_NAME, $request, $menu));
         }
 
-        return $response->setMessage(trans('core/base::notices.delete_success_message'));
+        return $response->setMessage(trans('Base::notices.delete_success_message'));
     }
 }

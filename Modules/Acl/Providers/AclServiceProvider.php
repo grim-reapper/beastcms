@@ -96,7 +96,7 @@ class AclServiceProvider extends ServiceProvider
             return new RoleCacheDecorator(new RoleRepository(new Role));
         });
 
-        Helper::autoload(__DIR__ . '/../helpers');
+        Helper::autoload(__DIR__ . '/../Helpers');
     }
 
     /**

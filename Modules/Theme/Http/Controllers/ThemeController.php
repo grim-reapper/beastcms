@@ -35,7 +35,7 @@ class ThemeController extends BaseController
 
         Assets::addScriptsDirectly('vendor/core/packages/theme/js/theme.js');
 
-        return view('packages/theme::list');
+        return view('Theme::list');
     }
 
     /**

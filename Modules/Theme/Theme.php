@@ -157,7 +157,6 @@ class Theme implements ThemeContract
         $this->files = $files;
 
         $this->breadcrumb = $breadcrumb;
-
         self::uses(setting('theme'))->layout(setting('layout', 'default'));
 
         SeoHelper::meta()
@@ -1025,7 +1024,7 @@ class Theme implements ThemeContract
      */
     public function routes()
     {
-        return File::requireOnce(package_path('theme/routes/public.php'));
+        return File::requireOnce(package_path('Theme/Routes/public.php'));
     }
 
     /**

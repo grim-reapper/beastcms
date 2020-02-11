@@ -11,7 +11,7 @@
                         @foreach(ThemeManager::getThemes() as $key =>  $theme)
                             <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="thumbnail">
-                                    <div class="img-thumbnail-wrap" style="background-image: url('{{ url(config('packages.theme.general.themeDir')) }}/{{ $key }}/screenshot.png')"></div>
+                                    <div class="img-thumbnail-wrap" style="background-image: url('{{ url(config('Theme.general.themeDir')) }}/{{ $key }}/screenshot.png')"></div>
                                     <div class="caption">
                                         <div class="col-12" style="background: #eee; padding: 15px;">
                                             <div style="word-break: break-all">

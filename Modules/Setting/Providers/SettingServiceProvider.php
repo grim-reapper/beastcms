@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factory;
 use Modules\Base\Supports\Helper;
 use Modules\Base\Traits\LoadAndPublishDataTrait;
 use Modules\Setting\Eloquent\SettingRepository;
-use Modules\Setting\Entities\Setting;
+use Modules\Setting\Entities\Setting as SettingModel;
 use Modules\Setting\Facades\SettingFacade;
 use Modules\Setting\Repositories\Caches\SettingCacheDecorator;
 use Modules\Setting\Repositories\Interfaces\SettingInterface;
@@ -83,10 +83,9 @@ class SettingServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(RouteServiceProvider::class);
+
         $this->setNamespace('Setting')
             ->loadAndPublishConfigurations(['general']);
-
         $this->app->singleton(SettingsManager::class, function (Application $app) {
             return new SettingsManager($app);
         });
@@ -99,11 +98,11 @@ class SettingServiceProvider extends ServiceProvider
 
         $this->app->bind(SettingInterface::class, function () {
             return new SettingCacheDecorator(
-                new SettingRepository(new Setting)
+                new SettingRepository(new SettingModel)
             );
         });
 
-        Helper::autoload(__DIR__ . '/../helpers');
+        Helper::autoload(__DIR__ . '/../Helpers');
     }
 
     /**

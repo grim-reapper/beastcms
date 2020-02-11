@@ -11,9 +11,6 @@
 |
 */
 
-Route::prefix('setting')->group(function() {
-    Route::get('/', 'SettingController@index');
-});
 Route::group(['namespace' => 'Modules\Setting\Http\Controllers', 'middleware' => 'web'], function () {
     Route::group(['prefix' => config('Base.general.admin_dir'), 'middleware' => 'auth'], function () {
         Route::group(['prefix' => 'settings'], function () {

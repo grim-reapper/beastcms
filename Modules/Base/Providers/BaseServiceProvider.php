@@ -39,8 +39,7 @@ class BaseServiceProvider extends ServiceProvider
         $this->app->bind(ResourceRegistrar::class, function ($app) {
             return new CustomResourceRegistrar($app['router']);
         });
-
-        Helper::autoload(__DIR__ . '/../helpers');
+        Helper::autoload(__DIR__ . '/../Helpers');
 
         $this->setNamespace('Base')
             ->loadAndPublishConfigurations(['general']);

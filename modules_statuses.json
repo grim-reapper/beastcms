@@ -15,5 +15,7 @@
     "Seo": true,
     "Theme": true,
     "Widget": true,
-    "PluginManagement": true
+    "PluginManagement": true,
+    "ThemeGenerator": true,
+    "DevTool": true
 }
